@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "*.js",
+        "src": "./index.js",
         "use": "@vercel/node"
       }
     ],
@@ -11,15 +11,5 @@
         "src": "/(.*)",
         "dest": "/"
       }
-    ],
-    "functions": {
-      "api/test.js": {
-        "memory": 3008,
-        "maxDuration": 30
-      },
-      "api/*.js": {
-        "memory": 3008,
-        "maxDuration": 30
-      }
+    ]
   }
-}
