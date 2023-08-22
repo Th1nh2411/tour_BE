@@ -57,13 +57,10 @@ export const getSingleTour = async (req, res) => {
 //Get All Tour
 export const getAllTour = async (req, res) => {
    //For pagination
-   const id = setTimeout(() => res.json({
-        message: "There was an error with the upstream service!"
-    }), 7000)
    const page = parseInt(req.query.page)
 
    //console.log(page)
-   
+
    try {
       const tours = await Tour.find({}).populate('reviews').skip(page * 8).limit(8)
 
