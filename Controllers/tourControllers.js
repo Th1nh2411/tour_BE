@@ -1,5 +1,5 @@
 import Tour from '../models/Tour.js'
-
+import db from '../utils/db.js'
 //Create new tour
 export const createTour = async (req, res) => {
    const newTour = new Tour(req.body)
@@ -56,6 +56,7 @@ export const getSingleTour = async (req, res) => {
 
 //Get All Tour
 export const getAllTour = async (req, res) => {
+   await db.connect();
    //For pagination
    const page = parseInt(req.query.page)
 
