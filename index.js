@@ -17,7 +17,7 @@ const corsOptions = {
 };
 //database connection
 
-
+await db.connect();
 //middle ware
 app.use(express.json());
 app.use(cors(corsOptions));
@@ -28,6 +28,5 @@ app.use("/api/v1/users", userRoute);
 app.use("/api/v1/review", reviewRoute);
 app.use("/api/v1/booking", bookingRoute);
 app.listen(port, async () => {
-  await db.connect();
   console.log("server listening on port", port);
 });

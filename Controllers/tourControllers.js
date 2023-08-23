@@ -2,7 +2,7 @@ import Tour from '../models/Tour.js'
 import db from '../utils/db.js'
 //Create new tour
 export const createTour = async (req, res) => {
-   await db.connect();
+   
    const newTour = new Tour(req.body)
 
    try {
@@ -16,7 +16,7 @@ export const createTour = async (req, res) => {
 
 //Update Tour
 export const updateTour = async (req, res) => {
-   await db.connect();
+   
    const id = req.params.id
 
    try {
@@ -32,7 +32,7 @@ export const updateTour = async (req, res) => {
 
 //Delete Tour
 export const deleteTour = async (req, res) => {
-   await db.connect();
+   
    const id = req.params.id
 
    try {
@@ -46,7 +46,7 @@ export const deleteTour = async (req, res) => {
 
 //Getsingle Tour
 export const getSingleTour = async (req, res) => {
-   await db.connect();
+   
    const id = req.params.id
 
    try {
@@ -60,7 +60,7 @@ export const getSingleTour = async (req, res) => {
 
 //Get All Tour
 export const getAllTour = async (req, res) => {
-   await db.connect();
+   
    //For pagination
    const page = parseInt(req.query.page)
 
@@ -79,7 +79,7 @@ export const getAllTour = async (req, res) => {
 // Get tour by search
 export const getTourBySearch = async (req, res) => {
 
-   await db.connect();
+   
    // hear 'i' means case sensitive 
    const city = new RegExp(req.query.city, 'i')
    const distance = parseInt(req.query.distance)
@@ -97,7 +97,7 @@ export const getTourBySearch = async (req, res) => {
 
 //Get featured Tour
 export const getFeaturedTour = async (req, res) => {
-   await db.connect();
+   
    //console.log(page)
 
    try {
@@ -111,7 +111,7 @@ export const getFeaturedTour = async (req, res) => {
 
 //Get tour count 
 export const getTourCount = async(req,res) => {
-   await db.connect();
+   
    try {
       const tourCount = await Tour.estimatedDocumentCount()
 
