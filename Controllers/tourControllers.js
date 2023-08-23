@@ -58,12 +58,12 @@ export const getSingleTour = async (req, res) => {
 export const getAllTour = async (req, res) => {
    await db.connect();
    //For pagination
-   const page = parseInt(req.query.page) || 1
+   const page = parseInt(req.query.page)
 
    //console.log(page)
 
    try {
-      const tours = await Tour.find({}).populate('reviews').skip(page * 8).limit(8)
+      const tours = await Tour.find({})
 
       res.status(200).json({ success: true, count: tours.length, message: 'Successfully', data: tours })
    } catch (error) {
