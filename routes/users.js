@@ -4,7 +4,7 @@ import {
   getAllUser,
   getSingleUser,
   updateUser,
-} from "../Controllers/userController.js";
+} from "../controllers/userController.js";
 
 import { verifyAdmin, verifyUser } from "../utils/authenticate.js";
 

@@ -3,7 +3,7 @@ import {
   createBooking,
   getAllBooking,
   getBooking,
-} from "../Controllers/bookingController.js";
+} from "../controllers/bookingController.js";
 import { verifyAdmin, verifyUser } from "../utils/authenticate.js";
 
 const router = express.Router();

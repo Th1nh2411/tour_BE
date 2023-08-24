@@ -8,7 +8,7 @@ import {
   getTourBySearch,
   getTourCount,
   updateTour,
-} from "../Controllers/tourControllers.js";
+} from "../controllers/tourController.js";
 
 import { verifyAdmin } from "../utils/authenticate.js";
 
