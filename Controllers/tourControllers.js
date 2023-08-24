@@ -68,8 +68,9 @@ export const getAllTour = async (req, res) => {
 
    try {
       const tours = await Tour.find({}).populate('reviews').skip(page * 8).limit(8)
+      const allTours = await Tour.find({})
 
-      res.status(200).json({ success: true, count: tours.length, message: 'Successfully', data: tours })
+      res.status(200).json({ success: true, count: allTours.length, message: 'Successfully', data: tours })
    } catch (error) {
       res.status(404).json({ success: false, message: 'Not Found' })
    }
@@ -87,7 +88,7 @@ export const getTourBySearch = async (req, res) => {
 
    try {
       // gte means greater than equal
-      const tours = await Tour.find({ city, distance: { $gte: distance }, maxGroupSize: { $gte: maxGroupSize } }).populate('reviews')
+      const tours = await Tour.find({ city, distance: { $lte: distance }, maxGroupSize: { $lte: maxGroupSize } }).populate('reviews')
 
       res.status(200).json({ success: true, message: 'Successfully', data: tours })
    } catch (error) {
