@@ -2,28 +2,44 @@ import mongoose from "mongoose";
 
 const tourSchema = new mongoose.Schema(
   {
-    title: {
+    reviews: {
+      type: mongoose.Types.ObjectId,
+      ref: "Review",
+    },
+    category: {
+      type: mongoose.Types.ObjectId,
+      ref: "Category",
+    },
+    itineraries: {
+      type: mongoose.Types.ObjectId,
+      ref: "Itinerary",
+    },
+    guide: {
+      type: mongoose.Types.ObjectId,
+      ref: "Guide",
+    },
+    tourName: {
       type: String,
       required: true,
       unique: true,
     },
-    city: {
+    description: {
       type: String,
       required: true,
     },
-    address: {
+    duration: {
       type: String,
       required: true,
     },
-    distance: {
-      type: Number,
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
       required: true,
     },
     photo: {
-      type: String,
-      required: true,
-    },
-    desc: {
       type: String,
       required: true,
     },
@@ -31,24 +47,20 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    maxGroupSize: {
+    availableSeats: {
       type: Number,
       required: true,
     },
-
-    reviews: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "Review",
-      },
-    ],
-
+    maxSeats: {
+      type: Number,
+      required: true,
+    },
     featured: {
       type: Boolean,
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: false }
 );
 
 export default mongoose.model("Tour", tourSchema);

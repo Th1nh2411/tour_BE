@@ -1,31 +1,31 @@
 import mongoose from "mongoose";
 
-const reviewSchema = new mongoose.Schema(
+const paymentSchema = new mongoose.Schema(
   {
     userInfo: {
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
-    tourInfo: {
+    bookingInfo: {
       type: mongoose.Types.ObjectId,
-      ref: "Tour",
+      ref: "Booking",
     },
-    comment: {
-      type: String,
-    },
-    createAt: {
+    paymentDate: {
       type: Date,
       required: true,
     },
-    rating: {
+    amount: {
       type: Number,
       required: true,
-      min: 0,
-      max: 5,
-      default: 0,
+      default: 0
     },
+    status: {
+      type: Number,
+      required: true,
+      default: 0
+    }
   },
   { timestamps: false }
 );
 
-export default mongoose.model("Review", reviewSchema);
+export default mongoose.model("Payment", paymentSchema);
