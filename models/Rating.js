@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 
-const reviewSchema = new mongoose.Schema(
+const wishlistSchema = new mongoose.Schema(
   {
     userInfo: {
       type: mongoose.Types.ObjectId,
       ref: "User",
     },
-    tourInfo: {
-      type: mongoose.Types.ObjectId,
-      ref: "Tour",
+    guideInfo: {
+        type: mongoose.Types.ObjectId,
+        ref: "Tour",
     },
     comment: {
       type: String,
@@ -28,4 +28,4 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: false }
 );
 
-export default mongoose.model("Review", reviewSchema);
+export default mongoose.model("Rating", wishlistSchema);
