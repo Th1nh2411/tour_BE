@@ -27,7 +27,7 @@ export const register = async (req, res) => {
 // user login
 export const login = async (req, res) => {
    try {
-      const email = req.body.username
+      const username = req.body.username
       const user = await User.findOne({ username })
       // if user doesn't exist
       if (!user) {
