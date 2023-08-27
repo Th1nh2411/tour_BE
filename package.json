@@ -10,8 +10,8 @@
     "start": "node index.js",
     "start-dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "node migration.js",
-    "undo": "node undomigration.js"
+    "migrate": "node migration/migration.js",
+    "undo": "node migration/undomigration.js"
   },
   "keywords": [],
   "author": "",

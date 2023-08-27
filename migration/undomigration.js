@@ -1,15 +1,4 @@
-import User from "./models/User.js";
-import Booking from "./models/Booking.js";
-import Category from "./models/Category.js";
-import Coupon from "./models/Coupon.js";
-import Guide from "./models/Guide.js";
-import Itinerary from "./models/Itinerary.js";
-import Payment from "./models/Payment.js";
-import Rating from "./models/Rating.js";
-import Review from "./models/Review.js";
-import Tour from "./models/Tour.js";
 import mongoose from "mongoose";
-
 
 async function deleteCollection(collectionName) {
     mongoose.set("strictQuery", false);
@@ -35,7 +24,6 @@ async function deleteCollections() {
         deleteCollection('categories'),
         deleteCollection('coupons'),
         deleteCollection('guides'),
-        deleteCollection('itineraries'),
         deleteCollection('payments'),
         deleteCollection('ratings'),
         deleteCollection('reviews'),

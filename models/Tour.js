@@ -2,21 +2,21 @@ import mongoose from "mongoose";
 
 const tourSchema = new mongoose.Schema(
   {
-    reviews: {
-      type: mongoose.Types.ObjectId,
-      ref: "Review",
-    },
     category: {
       type: mongoose.Types.ObjectId,
       ref: "Category",
     },
-    itineraries: {
+    reviews: {
       type: mongoose.Types.ObjectId,
-      ref: "Itinerary",
+      ref: "Review",
     },
     guide: {
       type: mongoose.Types.ObjectId,
       ref: "Guide",
+    },
+    itineraries: {
+      type: Array,
+      required: true
     },
     tourName: {
       type: String,

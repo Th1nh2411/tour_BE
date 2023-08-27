@@ -1,5 +1,9 @@
 import Tour from '../models/Tour.js'
 import db from '../utils/db.js'
+import Category from '../models/Category.js'
+import Guide from '../models/Guide.js'
+import Review from '../models/Review.js'
+
 //Create new tour
 export const createTour = async (req, res) => {
    
@@ -64,15 +68,13 @@ export const getAllTour = async (req, res) => {
    //For pagination
    const page = parseInt(req.query.page)
 
-   //console.log(page)
-
    try {
-      const tours = await Tour.find({}).populate('reviews').skip(page * 8).limit(8)
+      const tours = await Tour.find({}).populate('reviews').populate('guide').populate('category').skip(page * 8).limit(8)
       const allTours = await Tour.find({})
 
       res.status(200).json({ success: true, count: allTours.length, message: 'Successfully', data: tours })
    } catch (error) {
-      res.status(500).json({ success: false, message: 'Not Found' })
+      res.status(500).json({ success: false, message: error.message })
    }
 }
 
@@ -99,11 +101,10 @@ export const getTourBySearch = async (req, res) => {
 //Get featured Tour
 export const getFeaturedTour = async (req, res) => {
    try {
-      const tours = await Tour.find({ featured: true }).populate('reviews').limit(8)
-
+      const tours = await Tour.find({}).populate('reviews').limit(8)
       res.status(200).json({ success: true, message: 'Successfully', data: tours })
    } catch (error) {
-      res.status(500).json({ success: false, message: 'Not Found' })
+      res.status(500).json({ success: false, message: error.message })
    }
 }
 
