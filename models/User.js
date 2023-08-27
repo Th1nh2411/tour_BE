@@ -16,27 +16,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    fullName: {
-      type: String,
-      required: true,
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: true,
-    },
+
     photo: {
       type: String,
     },
+
     role: {
       type: String,
       default: "user",
     },
   },
-  { timestamps: false }
+  { timestamps: true }
 );
 
 export default mongoose.model("User", userSchema);

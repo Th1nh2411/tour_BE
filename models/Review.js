@@ -2,19 +2,16 @@ import mongoose from "mongoose";
 
 const reviewSchema = new mongoose.Schema(
   {
-    userInfo: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
-    tourInfo: {
+    productId: {
       type: mongoose.Types.ObjectId,
       ref: "Tour",
     },
-    comment: {
+    username: {
       type: String,
+      required: true,
     },
-    createAt: {
-      type: Date,
+    reviewText: {
+      type: String,
       required: true,
     },
     rating: {
@@ -25,7 +22,7 @@ const reviewSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { timestamps: false }
+  { timestamps: true }
 );
 
 export default mongoose.model("Review", reviewSchema);
