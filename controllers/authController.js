@@ -27,8 +27,8 @@ export const register = async (req, res) => {
 // user login
 export const login = async (req, res) => {
    try {
-      const email = req.body.email
-      const user = await User.findOne({ email })
+      const email = req.body.username
+      const user = await User.findOne({ username })
       // if user doesn't exist
       if (!user) {
          return res.status(404).json({ success: false, message: 'User not found!' })
