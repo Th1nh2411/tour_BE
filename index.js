@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 const corsOptions = {
-    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app/',
+    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
     credentials: true,
 };
 //database connection
