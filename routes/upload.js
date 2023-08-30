@@ -28,7 +28,7 @@ uploadRouter.post('/', upload.single('my_file'), async (req, res) => {
         });
     } catch (error) {
         console.log(error);
-        res.status(400).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 });
 export default uploadRouter;

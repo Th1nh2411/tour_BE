@@ -1,21 +1,17 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const couponSchema = new mongoose.Schema(
-  {
-    couponCode: {
-      type: String,
-      required: true,
+    {
+        couponCode: {
+            type: String,
+            required: true,
+        },
+        discountPercentage: {
+            type: Number,
+            required: true,
+        },
     },
-    discountPercentage: {
-      type: Number,
-      required: true,
-    },
-    validUntil: {
-      type: Date,
-      required: true,
-    },
-  },
-  { timestamps: false }
+    { timestamps: false },
 );
 
-export default mongoose.model("Coupon", couponSchema);
+export default mongoose.model('Coupon', couponSchema);

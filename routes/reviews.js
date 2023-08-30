@@ -1,9 +1,10 @@
-import express from "express";
-import { createReview } from "../controllers/reviewController.js";
-import { verifyUser } from "../utils/authenticate.js";
+import express from 'express';
+import { createReview, getAllReviewById } from '../controllers/reviewController.js';
+import { verifyToken, verifyUser } from '../utils/authenticate.js';
 
 const router = express.Router();
 
-router.post("/:tourId", verifyUser, createReview);
+router.post('/:id', verifyToken, verifyUser, createReview);
+router.get('/:id', getAllReviewById);
 
 export default router;

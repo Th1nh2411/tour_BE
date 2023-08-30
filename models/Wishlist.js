@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+const date = new Date();
+date.setHours(date.getHours() + 7);
 
 const wishlistSchema = new mongoose.Schema(
   {
@@ -12,7 +14,8 @@ const wishlistSchema = new mongoose.Schema(
       },
     createAt: {
         type: Date,
-        require: true
+        require: true,
+        default: date
     },
   },
   { timestamps: false }

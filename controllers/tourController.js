@@ -1,121 +1,129 @@
-import Tour from '../models/Tour.js'
-import db from '../utils/db.js'
-import Category from '../models/Category.js'
-import Guide from '../models/Guide.js'
-import Review from '../models/Review.js'
+import Tour from '../models/Tour.js';
+import Category from '../models/Category.js';
+import Guide from '../models/Guide.js';
+import Review from '../models/Review.js';
 
 //Create new tour
 export const createTour = async (req, res) => {
-   
-   const newTour = new Tour(req.body)
+    const newTour = new Tour(req.body);
 
-   try {
-      const savedTour = await newTour.save()
+    try {
+        const savedTour = await newTour.save();
 
-      res.status(200).json({ success: true, message: 'Successfully created', data: savedTour })
-   } catch (error) {
-      res.status(500).json({ success: true, message: 'Failed to create. Try again!' })
-   }
-}
+        res.status(200).json({ success: true, message: 'Successfully created', data: savedTour });
+    } catch (error) {
+        res.status(500).json({ success: true, message: 'Failed to create. Try again!' });
+    }
+};
 
-//Update Tour
 export const updateTour = async (req, res) => {
-   
-   const id = req.params.id
+    const id = req.params.id;
+    try {
+        const updatedTour = await Tour.findByIdAndUpdate(
+            id,
+            {
+                $set: req.body,
+            },
+            { new: true },
+        );
 
-   try {
-      const updatedTour = await Tour.findByIdAndUpdate(id, {
-         $set: req.body
-      }, { new: true })
-
-      res.status(200).json({ success: true, message: 'Successfully updated', data: updatedTour })
-   } catch (error) {
-      res.status(500).json({ success: false, message: 'Failed to update' })
-   }
-}
-
-//Delete Tour
-export const deleteTour = async (req, res) => {
-   
-   const id = req.params.id
-
-   try {
-      await Tour.findByIdAndDelete(id)
-
-      res.status(200).json({ success: true, message: 'Successfully deleted' })
-   } catch (error) {
-      res.status(500).json({ success: false, message: 'Failed to delete' })
-   }
-}
+        res.status(200).json({ success: true, message: 'Update Successful', data: updatedTour });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 //Getsingle Tour
-export const getSingleTour = async (req, res) => {
-   
-   const id = req.params.id
+export const getDetailTour = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const tour = await Tour.findById(id).populate('guide').populate('category');
 
-   try {
-      const tour = await Tour.findById(id).populate('reviews')
-
-      res.status(200).json({ success: true, message: 'Successfully', data: tour })
-   } catch (error) {
-      res.status(500).json({ success: false, message: 'Not Found' })
-   }
-}
+        res.status(200).json({ success: true, message: 'Successfully', data: tour });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 //Get All Tour
 export const getAllTour = async (req, res) => {
-   
-   //For pagination
-   const page = parseInt(req.query.page)
+    //For pagination
+    const page = parseInt(req.query.page);
+    try {
+        let tours = await Tour.find({})
+            .populate('guide')
+            .populate('category')
+            .skip(page * 8)
+            .limit(8)
+            .lean()
+            .exec();
+        const updatedTours = await Promise.all(
+            tours.map(async (tour) => {
+                const result = await Review.aggregate([
+                    { $match: { tourInfo: tour._id } }, // Lọc theo id tour
+                    { $group: { _id: '$tourId', averageRating: { $avg: '$rating' } } }, // Tính rating trung bình
+                ]);
+                if (result.length > 0) {
+                    tour.averageRating = Math.round(result[0].averageRating);
+                } else {
+                    tour.averageRating = 0; // Nếu không có đánh giá, mặc định là 0
+                }
+                return tour;
+            }),
+        );
+        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
-   try {
-      const tours = await Tour.find({}).populate('reviews').populate('guide').populate('category').skip(page * 8).limit(8)
-      const allTours = await Tour.find({})
-
-      res.status(200).json({ success: true, count: allTours.length, message: 'Successfully', data: tours })
-   } catch (error) {
-      res.status(500).json({ success: false, message: error.message })
-   }
-}
-
-
-// Get tour by search
 export const getTourBySearch = async (req, res) => {
+    const city = req.query.city;
+    const maxSeats = parseInt(req.query.maxSeats);
+    const category = req.query.category;
 
-   
-   // hear 'i' means case sensitive 
-   const city = new RegExp(req.query.city, 'i')
-   const distance = parseInt(req.query.distance)
-   const maxGroupSize = parseInt(req.query.maxGroupSize)
+    try {
+        const tours = await Tour.find({ city, maxSeats, category }).populate('guide').populate('category');
 
-   try {
-      // gte means greater than equal
-      const tours = await Tour.find({ city, distance: { $lte: distance }, maxGroupSize: { $lte: maxGroupSize } }).populate('reviews')
+        const updatedTours = await Promise.all(
+            tours.map(async (tour) => {
+                const result = await Review.aggregate([
+                    { $match: { tourInfo: tour._id } }, // Lọc theo id tour
+                    { $group: { _id: '$tourId', averageRating: { $avg: '$rating' } } }, // Tính rating trung bình
+                ]);
+                if (result.length > 0) {
+                    tour.averageRating = Math.round(result[0].averageRating);
+                } else {
+                    tour.averageRating = 0; // Nếu không có đánh giá, mặc định là 0
+                }
+                return tour;
+            }),
+        );
+        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
-      res.status(200).json({ success: true, message: 'Successfully', data: tours })
-   } catch (error) {
-      res.status(500).json({ success: false, message: 'Not Found' })
-   }
-}
-
-//Get featured Tour
 export const getFeaturedTour = async (req, res) => {
-   try {
-      const tours = await Tour.find({}).populate('reviews').limit(8)
-      res.status(200).json({ success: true, message: 'Successfully', data: tours })
-   } catch (error) {
-      res.status(500).json({ success: false, message: error.message })
-   }
-}
-
-//Get tour count 
-export const getTourCount = async(req,res) => {
-   
-   try {
-      const tourCount = await Tour.estimatedDocumentCount()
-
-      res.status(200).json({success:true, data:tourCount})
-   } catch (error) {
-      res.status(500).json({success:false, message: "Failed to fetch"})
-   }
-}
+    try {
+        const tours = await Tour.find({}).populate('guide').populate('category').limit(8);
+        const updatedTours = await Promise.all(
+            tours.map(async (tour) => {
+                const result = await Review.aggregate([
+                    { $match: { tourInfo: tour._id } }, // Lọc theo id tour
+                    { $group: { _id: '$tourId', averageRating: { $avg: '$rating' } } }, // Tính rating trung bình
+                ]);
+                if (result.length > 0) {
+                    tour.averageRating = Math.round(result[0].averageRating);
+                } else {
+                    tour.averageRating = 0; // Nếu không có đánh giá, mặc định là 0
+                }
+                return tour;
+            }),
+        );
+        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};

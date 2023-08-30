@@ -1,17 +1,24 @@
-import express from "express";
-import toursRouter from "./tours.js";
-import userRouter from "./users.js";
-import authRouter from "./auth.js";
-import reviewRouter from "./reviews.js";
-import bookingRouter from "./bookings.js";
-import uploadRouter from "./upload.js";
-
+import express from 'express';
+import toursRouter from './tours.js';
+import userRouter from './users.js';
+import authRouter from './auth.js';
+import reviewRouter from './reviews.js';
+import bookingRouter from './bookings.js';
+import uploadRouter from './upload.js';
+import categoryRouter from './category.js';
+import couponRouter from './coupon.js';
+import guideRouter from './guide.js';
+import wishlistRouter from './wishlist.js';
 const rootRouter = express.Router();
 
-rootRouter.use('/api/v1/auth', authRouter);
-rootRouter.use('/api/v1/booking', bookingRouter);
-rootRouter.use('/api/v1/review', reviewRouter);
-rootRouter.use('/api/v1/tours', toursRouter);
+rootRouter.use('/auth', authRouter);
+rootRouter.use('/booking', bookingRouter);
+rootRouter.use('/review', reviewRouter);
+rootRouter.use('/tour', toursRouter);
 rootRouter.use('/upload', uploadRouter);
-rootRouter.use('/api/v1/users', userRouter);
+rootRouter.use('/user', userRouter);
+rootRouter.use('/category', categoryRouter);
+rootRouter.use('/coupon', couponRouter);
+rootRouter.use('/guide', guideRouter);
+rootRouter.use('/wishlist', wishlistRouter);
 export default rootRouter;
