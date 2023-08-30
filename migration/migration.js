@@ -1,13 +1,11 @@
 import User from '../models/User.js';
 import Booking from '../models/Booking.js';
 import Category from '../models/Category.js';
-import Coupon from '../models/Coupon.js';
 import Guide from '../models/Guide.js';
 import Payment from '../models/Payment.js';
 import Review from '../models/Review.js';
 import Tour from '../models/Tour.js';
 import Wishlist from '../models/Wishlist.js';
-import UserCoupon from '../models/UserCoupon.js';
 import mongoose from 'mongoose';
 
 async function seed() {
@@ -20,7 +18,6 @@ async function seed() {
                 useUnifiedTopology: true,
             },
         );
-
         await User.createCollection()
             .then(() => {
                 console.log('User collection created');
@@ -100,42 +97,6 @@ async function seed() {
             },
         ];
         await Category.insertMany(categoryData);
-
-        await Coupon.createCollection()
-            .then(() => {
-                console.log('Coupon collection created');
-            })
-            .catch((err) => {
-                console.error('Error creating Coupon collection:', err);
-            });
-        const couponData = [
-            {
-                _id: '6153f2e39c6c9bdf49ec1d91',
-                couponCode: 'MEMBERSHIP5',
-                discountPercentage: '5',
-            },
-            {
-                _id: '6153f2e39c6c9bdf49ec1d92',
-                couponCode: 'MEMBERSHIP10',
-                discountPercentage: '10',
-            },
-            {
-                _id: '6153f2e39c6c9bdf49ec1d93',
-                couponCode: 'MEMBERSHIP15',
-                discountPercentage: '15',
-            },
-            {
-                _id: '6153f2e39c6c9bdf49ec1d94',
-                couponCode: 'MEMBERSHIP20',
-                discountPercentage: '20',
-            },
-            {
-                _id: '6153f2e39c6c9bdf49ec1d95',
-                couponCode: 'MEMBERSHIP25',
-                discountPercentage: '25',
-            },
-        ];
-        await Coupon.insertMany(couponData);
 
         await Guide.createCollection()
             .then(() => {
@@ -648,14 +609,6 @@ async function seed() {
             },
         ];
         await Tour.insertMany(tourData);
-
-        await UserCoupon.createCollection()
-            .then(() => {
-                console.log('UserCoupon collection created');
-            })
-            .catch((err) => {
-                console.error('Error creating UserCoupon collection:', err);
-            });
 
         await Review.createCollection()
             .then(() => {

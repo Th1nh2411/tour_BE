@@ -25,7 +25,6 @@ async function deleteCollections() {
         await Promise.all([
             deleteCollection('bookings'),
             deleteCollection('categories'),
-            deleteCollection('coupons'),
             deleteCollection('guides'),
             deleteCollection('payments'),
             deleteCollection('reviews'),

@@ -9,12 +9,32 @@ const userSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: true,
             unique: true,
+            required: true,
+            validate: [
+                {
+                    validator: function (v) {
+                        return /\S+@\S+\.\S+/.test(v);
+                    },
+                    message: 'Email không hợp lệ',
+                },
+                {
+                    validator: async function (v) {
+                        const count = await this.model('User').countDocuments({ email: v });
+                        return count === 0;
+                    },
+                    message: 'Email đã tồn tại',
+                },
+            ],
         },
         password: {
             type: String,
             required: true,
+        },
+        rank: {
+            type: Number,
+            required: true,
+            default: 0,
         },
         fullName: {
             type: String,
@@ -23,6 +43,15 @@ const userSchema = new mongoose.Schema(
         phoneNumber: {
             type: String,
             required: true,
+            unique: true,
+            validate: [
+                {
+                    validator: function (v) {
+                        return /^\d{10}$/.test(v);
+                    },
+                    message: 'Số điện thoại phải có đúng 10 chữ số',
+                },
+            ],
         },
         address: {
             type: String,

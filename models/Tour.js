@@ -55,10 +55,14 @@ const tourSchema = new mongoose.Schema(
         availableSeats: {
             type: Number,
             required: true,
+            min: 0,
+            max: 50,
         },
         maxSeats: {
             type: Number,
             required: true,
+            min: 10,
+            max: 50,
         },
         status: {
             type: Number,
