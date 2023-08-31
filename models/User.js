@@ -6,35 +6,11 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            validate: [
-                {
-                    validator: async function (v) {
-                        const count = await this.model('User').countDocuments({ username: v });
-                        return count === 0;
-                    },
-                    message: 'Username đã tồn tại',
-                },
-            ],
         },
         email: {
             type: String,
             unique: true,
             require: true,
-            validate: [
-                {
-                    validator: function (v) {
-                        return /\S+@\S+\.\S+/.test(v);
-                    },
-                    message: 'Email không hợp lệ',
-                },
-                {
-                    validator: async function (v) {
-                        const count = await this.model('User').countDocuments({ email: v });
-                        return count === 0;
-                    },
-                    message: 'Email đã tồn tại',
-                },
-            ],
         },
         password: {
             type: String,
@@ -53,14 +29,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
-            validate: [
-                {
-                    validator: function (v) {
-                        return /^\d{10}$/.test(v);
-                    },
-                    message: 'Số điện thoại phải có đúng 10 chữ số',
-                },
-            ],
         },
         address: {
             type: String,

@@ -58,7 +58,7 @@ export const login = async (req, res) => {
                     .json({ token, data: { ...rest } });
             }
         } else {
-            return res.status(404).json({ success: false, message: 'username is not exist' });
+            return res.status(404).json({ success: false, message: 'Username is not exist' });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
