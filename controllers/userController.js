@@ -453,7 +453,7 @@ export const forgotPassword = async (req, res) => {
                           </td>
                           </tr><!-- end tr -->
                           <tr>
-                          <td valign="middle" class="hero bg_white" style="background-image: url(https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156745/amazon_reqe5d.png); background-size: cover; height: 400px;">
+                          <td valign="middle" class="hero bg_white" style="background-image: url(https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155759/cc8qb9rmjoxgsl2wx7fe_r9nmrg.webp); background-size: cover; height: 400px;">
                               <div class="overlay"></div>
                             <table>
                                 <tr>
@@ -861,7 +861,7 @@ export const activeUser = async (req, res) => {
                       </td>
                       </tr><!-- end tr -->
                       <tr>
-                      <td valign="middle" class="hero bg_white" style="background-image: url(https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156745/amazon_reqe5d.png); background-size: cover; height: 400px;">
+                      <td valign="middle" class="hero bg_white" style="background-image: url(https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155759/cc8qb9rmjoxgsl2wx7fe_r9nmrg.webp); background-size: cover; height: 400px;">
                           <div class="overlay"></div>
                         <table>
                             <tr>
