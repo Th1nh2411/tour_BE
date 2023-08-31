@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 import moment from 'moment';
 import querystring from 'qs';
-import config from '../config/default.json';
+import config from '../config/default.json' assert { type: 'json' };
 import crypto from 'crypto';
 import Booking from '../models/Booking.js';
 import Payment from '../models/Payment.js';
