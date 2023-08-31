@@ -4,7 +4,7 @@ export const verifyToken = (req, res, next) => {
     const token = req.cookies.accessToken;
 
     if (!token) {
-        return res.status(401).json({ success: false, message: 'You are not authenticated!' });
+        return res.status(401).json({ success: false, message: 'You are not authenticated' });
     }
 
     // if token is exist then verify the token

@@ -9,6 +9,8 @@ import {
     createUser,
     forgotPassword,
     verify,
+    activeUser,
+    verifyActiveUser,
 } from '../controllers/userController.js';
 
 import { verifyAdmin, verifyToken, verifyUser } from '../utils/authenticate.js';
@@ -17,6 +19,8 @@ const router = express.Router();
 
 //Update user
 router.put('/profile', verifyToken, updateUser);
+router.get('/active', verifyToken, activeUser);
+router.post('/active', verifyToken, verifyActiveUser);
 router.put('/changepassword', verifyToken, changePassword);
 router.post('/forgotpassword', forgotPassword);
 router.post('/forgotpassword/verify', verify);
