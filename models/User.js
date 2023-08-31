@@ -6,11 +6,20 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: true,
             unique: true,
+            validate: [
+                {
+                    validator: async function (v) {
+                        const count = await this.model('User').countDocuments({ username: v });
+                        return count === 0;
+                    },
+                    message: 'Username đã tồn tại',
+                },
+            ],
         },
         email: {
             type: String,
             unique: true,
-            required: true,
+            require: true,
             validate: [
                 {
                     validator: function (v) {
@@ -55,7 +64,6 @@ const userSchema = new mongoose.Schema(
         },
         address: {
             type: String,
-            required: true,
         },
         verifyID: {
             type: String,
