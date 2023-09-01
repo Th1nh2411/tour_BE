@@ -78,12 +78,14 @@ export const getAllTour = async (req, res) => {
 };
 
 export const getTourBySearch = async (req, res) => {
-    const city = req.query.city;
-    const maxSeats = parseInt(req.query.maxSeats);
+    const address = req.query.address;
+    const availableSeats = parseInt(req.query.availableSeats);
     const category = req.query.category;
 
     try {
-        const tours = await Tour.find({ city, maxSeats, category }).populate('guide').populate('category');
+        const tours = await Tour.find({ address, availableSeats: { $gte: availableSeats }, category })
+            .populate('guide')
+            .populate('category');
 
         const updatedTours = await Promise.all(
             tours.map(async (tour) => {

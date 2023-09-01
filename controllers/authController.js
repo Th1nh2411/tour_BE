@@ -28,38 +28,9 @@ export const register = async (req, res) => {
 };
 
 // user login
-export const login = async (req, res) => {
+export const test = async (req, res) => {
     try {
-        const username = req.body.username;
-        const user = await User.findOne({ username });
-        // if user doesn't exist
-        if (user) {
-            // if user is exist then check the passord or compare the password
-            const checkCorrectPassword = await bcrypt.compare(req.body.password, user.password);
-
-            // if password incorrect
-            if (!checkCorrectPassword) {
-                return res.status(401).json({ success: false, message: 'Wrong password' });
-            } else {
-                const { password, ...rest } = user._doc;
-                // create jwt token
-                const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET_KEY, {
-                    expiresIn: '15d',
-                });
-
-                // set token in the browser cookies and send the response to the client
-                res.cookie('accessToken', token, {
-                    httpOnly: true,
-                    expires: token.expiresIn,
-                    sameSite: process.env.ENV === 'dev' ? true : 'none',
-                    secure: process.env.ENV === 'dev' ? false : true,
-                })
-                    .status(200)
-                    .json({ token, data: { ...rest } });
-            }
-        } else {
-            return res.status(404).json({ success: false, message: 'Username is not exist' });
-        }
+        
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
