@@ -30,7 +30,7 @@ export const createTourToWishlist = async (req, res) => {
 export const getAllTourInWishlist = async (req, res) => {
     try {
         const items = await Wishlist.find({ userInfo: req.user.id }).populate('tourInfo');
-        res.status(200).json({ success: true, message: 'Successful', data: items });
+        res.status(200).json({ success: true, data: items });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

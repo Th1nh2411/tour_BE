@@ -21,7 +21,7 @@ export const register = async (req, res) => {
 
         await newUser.save();
 
-        res.status(200).json({ success: true, message: 'Create Successful' });
+        res.status(200).json({ success: true, message: 'Tạo tài khoản thành công' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -37,7 +37,7 @@ export const login = async (req, res) => {
             const checkCorrectPassword = await bcrypt.compare(req.body.password, user.password);
             // if password incorrect
             if (!checkCorrectPassword) {
-                return res.status(401).json({ success: false, message: 'Wrong password' });
+                return res.status(401).json({ success: false, message: 'Sai mật khẩu' });
             } else {
                 const { password, ...rest } = user._doc;
                 // create jwt token
@@ -55,7 +55,7 @@ export const login = async (req, res) => {
                     .json({ token, data: { ...rest } });
             }
         } else {
-            return res.status(404).json({ success: false, message: 'username is not exist' });
+            return res.status(404).json({ success: false, message: 'Username không tồn tại' });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

@@ -13,7 +13,7 @@ export const createReview = async (req, res) => {
 
     try {
         const savedReview = await newReview.save();
-        res.status(200).json({ success: true, message: 'Review submitted', data: savedReview });
+        res.status(200).json({ success: true, message: 'Đánh giá thành công', data: savedReview });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -23,7 +23,7 @@ export const getAllReviewById = async (req, res) => {
     try {
         const reviews = await Review.find({ tourInfo: id }).populate('tourInfo').populate('userInfo');
 
-        res.status(200).json({ success: true, message: 'Successfully', data: reviews });
+        res.status(200).json({ success: true, data: reviews });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

@@ -13,7 +13,7 @@ export const createBooking = async (req, res) => {
         if (!check) {
             const tour = await Tour.findById(tourInfo);
             if (tour.availableSeats < guestSize) {
-                res.status(400).json({ success: false, message: 'Available seats are not enough' });
+                res.status(400).json({ success: false, message: 'Số lượng chỗ ngồi còn lại không đủ' });
             } else {
                 const user = await User.findById(req.user.id);
                 const count = await Booking.countDocuments({ userInfo: req.user.id, status: 2 });
@@ -54,7 +54,7 @@ export const createBooking = async (req, res) => {
                             { new: true },
                         );
                     }
-                    res.status(200).json({ success: true, message: 'Book Successful' });
+                    res.status(200).json({ success: true, message: 'Đặt tour thành công' });
                 } else if (user.rank == 1) {
                     const newBooking = new Booking({
                         userInfo: req.user.id,
@@ -94,7 +94,7 @@ export const createBooking = async (req, res) => {
                     }
                     res.status(200).json({
                         success: true,
-                        message: 'Book Successful. Your rank is brozen, you get 5% off',
+                        message: 'Đặt tour thành công. Hạng của bạn là Đồng, bạn được giảm 5%',
                     });
                 } else if (user.rank == 2) {
                     const newBooking = new Booking({
@@ -135,7 +135,7 @@ export const createBooking = async (req, res) => {
                     }
                     res.status(200).json({
                         success: true,
-                        message: 'Book Successful. Your rank is silver, you get 10% off',
+                        message: 'Đặt tour thành công. Hạng của bạn là Bạc, bạn được giảm 10%',
                     });
                 } else {
                     const newBooking = new Booking({
@@ -176,7 +176,7 @@ export const createBooking = async (req, res) => {
                     }
                     res.status(200).json({
                         success: true,
-                        message: 'Book Successful. Your rank is gold, you get 15% off',
+                        message: 'Đặt tour thành công. Hạng của bạn là Vàng, bạn được giảm 15%',
                     });
                 }
             }
@@ -229,7 +229,7 @@ export const cancelBooking = async (req, res) => {
                 { new: true },
             );
         }
-        res.status(200).json({ success: true, message: 'Cancel Successful' });
+        res.status(200).json({ success: true, message: 'Huỷ tour thành công' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -242,7 +242,7 @@ export const getDetailBooking = async (req, res) => {
     try {
         const book = await Booking.findById(id);
 
-        res.status(200).json({ success: true, message: 'Successful', data: book });
+        res.status(200).json({ success: true, data: book });
     } catch (error) {
         res.status(404).json({ success: false, message: error.message });
     }
@@ -254,10 +254,10 @@ export const getAllBooking = async (req, res) => {
         if (req.user.role == 'user') {
             const books = await Booking.find({ userInfo: req.user.id }).populate('userInfo').populate('tourInfo');
 
-            res.status(200).json({ success: true, message: 'Successful', data: books });
+            res.status(200).json({ success: true, data: books });
         } else {
             const books = await Booking.find().populate('userInfo').populate('tourInfo');
-            res.status(200).json({ success: true, message: 'Successful', data: books });
+            res.status(200).json({ success: true, data: books });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

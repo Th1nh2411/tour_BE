@@ -10,9 +10,9 @@ export const createTour = async (req, res) => {
     try {
         const savedTour = await newTour.save();
 
-        res.status(200).json({ success: true, message: 'Successfully created', data: savedTour });
+        res.status(200).json({ success: true, message: 'Thêm mới thành công', data: savedTour });
     } catch (error) {
-        res.status(500).json({ success: true, message: 'Failed to create. Try again' });
+        res.status(500).json({ success: true, message: error.message });
     }
 };
 
@@ -27,7 +27,7 @@ export const updateTour = async (req, res) => {
             { new: true },
         );
 
-        res.status(200).json({ success: true, message: 'Update Successful', data: updatedTour });
+        res.status(200).json({ success: true, message: 'Cập nhật thành công', data: updatedTour });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -39,7 +39,7 @@ export const getDetailTour = async (req, res) => {
     try {
         const tour = await Tour.findById(id).populate('guide').populate('category');
 
-        res.status(200).json({ success: true, message: 'Successfully', data: tour });
+        res.status(200).json({ success: true, data: tour });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -71,7 +71,7 @@ export const getAllTour = async (req, res) => {
                 return tour;
             }),
         );
-        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+        res.status(200).json({ success: true, data: updatedTours });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -79,13 +79,32 @@ export const getAllTour = async (req, res) => {
 
 export const getTourBySearch = async (req, res) => {
     const address = req.query.address;
-    const availableSeats = parseInt(req.query.availableSeats);
+    const availableSeats = parseInt(req.query.availableSeats) || 1;
     const category = req.query.category;
+    let tours = {};
 
     try {
-        const tours = await Tour.find({ address, availableSeats: { $gte: availableSeats }, category })
-            .populate('guide')
-            .populate('category');
+        if (address) {
+            if (category) {
+                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address, category })
+                    .populate('guide')
+                    .populate('category');
+            } else {
+                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address })
+                    .populate('guide')
+                    .populate('category');
+            }
+        } else {
+            if (category) {
+                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, category })
+                    .populate('guide')
+                    .populate('category');
+            } else {
+                tours = await Tour.find({ availableSeats: { $gte: availableSeats } })
+                    .populate('guide')
+                    .populate('category');
+            }
+        }
 
         const updatedTours = await Promise.all(
             tours.map(async (tour) => {
@@ -101,7 +120,7 @@ export const getTourBySearch = async (req, res) => {
                 return tour;
             }),
         );
-        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+        res.status(200).json({ success: true, data: updatedTours });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -124,7 +143,7 @@ export const getFeaturedTour = async (req, res) => {
                 return tour;
             }),
         );
-        res.status(200).json({ success: true, message: 'Successfully', data: updatedTours });
+        res.status(200).json({ success: true, data: updatedTours });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

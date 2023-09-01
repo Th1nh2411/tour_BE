@@ -9,7 +9,7 @@ export const createUser = async (req, res) => {
     try {
         const savedUser = await newUser.save();
 
-        res.status(200).json({ success: true, message: 'Create Successful', data: savedUser });
+        res.status(200).json({ success: true, message: 'Thêm mới thành công', data: savedUser });
     } catch (error) {
         res.status(500).json({ success: true, message: error.message });
     }
@@ -26,7 +26,7 @@ export const updateUser = async (req, res) => {
             { new: true },
         );
 
-        res.status(200).json({ success: true, message: 'Update Successful' });
+        res.status(200).json({ success: true, message: 'Cập nhật thành công' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -43,7 +43,7 @@ export const changePassword = async (req, res) => {
                 if (newPassword == oldPassword) {
                     res.status(400).json({
                         success: true,
-                        message: 'The old password and the new password must be different',
+                        message: 'Mật khẩu cũ và mật khẩu mới phải khác nhau',
                     });
                 } else {
                     const salt = bcrypt.genSaltSync(10);
@@ -57,19 +57,19 @@ export const changePassword = async (req, res) => {
                     );
                     res.status(200).json({
                         success: true,
-                        message: 'Change password succesful',
+                        message: 'Đổi mật khẩu thành công',
                     });
                 }
             } else {
                 res.status(400).json({
                     success: false,
-                    message: 'Repeat password is wrong',
+                    message: 'Mật khẩu lặp lại không khớp',
                 });
             }
         } else {
             res.status(400).json({
                 success: false,
-                message: 'Wrong password',
+                message: 'Sai mật khẩu',
             });
         }
     } catch (error) {
@@ -95,12 +95,12 @@ export const accessForgotPassword = async (req, res) => {
             );
             res.status(200).json({
                 success: true,
-                message: 'Reset password succesful',
+                message: 'Lấy lại mật khẩu thành công',
             });
         } else {
             res.status(400).json({
                 success: false,
-                message: 'Repeat password is wrong',
+                message: 'Mật khẩu lặp lại không khớp',
             });
         }
     } catch (error) {
@@ -119,12 +119,12 @@ export const verify = async (req, res) => {
         if (user) {
             res.status(200).json({
                 success: true,
-                message: `Correct verification code, proceed to enter new password`,
+                message: `Mã xác minh chính xác, tiến hành nhập mật khẩu mới`,
             });
         } else {
             res.status(400).json({
                 success: false,
-                message: `Verification code is incorrect`,
+                message: `Mã xác minh không chính xác`,
             });
         }
     } catch (error) {
@@ -529,12 +529,12 @@ export const forgotPassword = async (req, res) => {
             });
             res.status(200).json({
                 success: true,
-                message: `Verification code has been sent to your email, please check your mailbox`,
+                message: `Mã xác minh đã được gửi về email đăng ký, vui lòng kiểm tra hòm thư`,
             });
         } else {
             res.status(400).json({
                 success: false,
-                message: `Information is not correct`,
+                message: `Thông tin không chính xác`,
             });
         }
     } catch (error) {
@@ -546,7 +546,7 @@ export const activeUser = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
         if (user.isActive) {
-            res.status(400).json({ success: false, message: 'Your account has already been activated' });
+            res.status(400).json({ success: false, message: 'Tài khoản của bạn đã được kích hoạt' });
         } else {
             const activeID = (Math.random() + 1).toString(36).substring(2);
             await User.findOneAndUpdate(
@@ -937,7 +937,7 @@ export const activeUser = async (req, res) => {
             });
             res.status(200).json({
                 success: true,
-                message: `Activation code has been sent to your email, please check your inbox`,
+                message: `Mã kích hoạt đã được gửi về email đăng ký, vui lòng kiểm tra hòm thư`,
             });
         }
     } catch (error) {
@@ -964,12 +964,12 @@ export const verifyActiveUser = async (req, res) => {
             );
             res.status(200).json({
                 success: true,
-                message: `The correct activation code your account has been activated`,
+                message: `Kích hoạt tài khoản thành công`,
             });
         } else {
             res.status(400).json({
                 success: false,
-                message: `Activation code is incorrect`,
+                message: `Mã kích hoạt không chính xác`,
             });
         }
     } catch (error) {
@@ -984,7 +984,7 @@ export const deleteUser = async (req, res) => {
     try {
         await User.findByIdAndDelete(id);
 
-        res.status(200).json({ success: true, message: 'Delete Successful' });
+        res.status(200).json({ success: true, message: 'Xoá thành công' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -997,7 +997,7 @@ export const getDetailUser = async (req, res) => {
     try {
         const user = await User.findById(id);
 
-        res.status(200).json({ success: true, message: 'Successfully', data: user });
+        res.status(200).json({ success: true, data: user });
     } catch (error) {
         res.status(404).json({ success: false, message: error.message });
     }
@@ -1007,7 +1007,7 @@ export const getAllUser = async (req, res) => {
     try {
         const users = await User.find({});
 
-        res.status(200).json({ success: true, message: 'Successfully', data: users });
+        res.status(200).json({ success: true, data: users });
     } catch (error) {
         res.status(404).json({ success: false, message: error.message });
     }
