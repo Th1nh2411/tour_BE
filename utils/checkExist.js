@@ -11,7 +11,7 @@ export const checkExistUsername = async (req, res, next) => {
         if (!check) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Username already exists' });
+            res.status(400).json({ success: false, message: 'Username đã tồn tại' });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });
@@ -27,7 +27,7 @@ export const checkExistPhoneNumber = async (req, res, next) => {
         if (!checkUser && !checkGuide) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Phone number already exists' });
+            res.status(400).json({ success: false, message: 'Số điện thoại đã tồn tại' });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });
@@ -43,7 +43,7 @@ export const checkExistEmail = async (req, res, next) => {
         if (!checkUser && !checkGuide) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Email already exists' });
+            res.status(400).json({ success: false, message: 'Email đã tồn tại' });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });
@@ -58,7 +58,7 @@ export const checkExistCategory = async (req, res, next) => {
         if (!check) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Category already exists' });
+            res.status(400).json({ success: false, message: 'Category đã tồn tại' });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });
@@ -73,7 +73,7 @@ export const checkExistTour = async (req, res, next) => {
         if (!check) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Tour already exists' });
+            res.status(400).json({ success: false, message: 'Tour đã tồn tại' });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });

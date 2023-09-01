@@ -4,13 +4,13 @@ export const verifyToken = (req, res, next) => {
     const token = req.cookies.accessToken;
 
     if (!token) {
-        return res.status(401).json({ success: false, message: 'You are not authenticated' });
+        return res.status(401).json({ success: false, message: 'Vui lòng đăng nhập' });
     }
 
     // if token is exist then verify the token
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
         if (err) {
-            return res.status(401).json({ success: false, message: 'Token is invalid' });
+            return res.status(401).json({ success: false, message: 'Authenticate Error' });
         }
 
         req.user = user;
@@ -22,7 +22,7 @@ export const verifyUser = (req, res, next) => {
     if (req.user.role === 'user') {
         next();
     } else {
-        return res.status(401).json({ success: false, message: 'You are not authorized' });
+        return res.status(401).json({ success: false, message: 'Bạn không có quyền sử dụng chức năng này' });
     }
 };
 
@@ -30,6 +30,6 @@ export const verifyAdmin = (req, res, next) => {
     if (req.user.role === 'admin') {
         next();
     } else {
-        return res.status(401).json({ success: false, message: 'You are not authorized' });
+        return res.status(401).json({ success: false, message: 'Bạn không có quyền sử dụng chức năng này' });
     }
 };

@@ -7,7 +7,10 @@ export const checkActiveAccount = async (req, res, next) => {
         if (user.isActive) {
             next();
         } else {
-            res.status(400).json({ success: false, message: 'Your account is not activated yet' });
+            res.status(400).json({
+                success: false,
+                message: 'Tài khoản của bạn chưa được kích hoạt, không thể đặt tour',
+            });
         }
     } catch (error) {
         res.status(501).json({ success: false, message: 'Middlewares Error' });
