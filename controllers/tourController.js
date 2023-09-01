@@ -80,41 +80,58 @@ export const getAllTour = async (req, res) => {
 
 export const getTourBySearch = async (req, res) => {
     const page = parseInt(req.query.page);
-    const address = new RegExp(req.query.address, 'i');
     const availableSeats = parseInt(req.query.availableSeats) || 1;
     const category = req.query.category;
+    const keyword = new RegExp(req.query.keyword, 'i');
     let tours = {};
     let allTours = {};
-
     try {
-        if (address) {
-            if (category) {
-                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address, category })
+        if (category) {
+            if (keyword) {
+                tours = await Tour.find({
+                    availableSeats: { $gte: availableSeats },
+                    category,
+                    $or: [{ tourName: keyword }, { address: keyword }],
+                })
                     .populate('guide')
                     .populate('category')
+                    .lean()
                     .skip(page * 8)
                     .limit(8);
-                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, address, category });
+                allTours = await Tour.find({
+                    availableSeats: { $gte: availableSeats },
+                    category,
+                    $or: [{ tourName: keyword }, { address: keyword }],
+                });
             } else {
-                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address })
-                    .populate('guide')
-                    .populate('category')
-                    .skip(page * 8)
-                    .limit(8);
-                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, address });
-            }
-        } else {
-            if (category) {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats }, category })
                     .populate('guide')
                     .populate('category')
+                    .lean()
                     .skip(page * 8)
                     .limit(8);
                 allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, category });
+            }
+        } else {
+            if (keyword) {
+                tours = await Tour.find({
+                    availableSeats: { $gte: availableSeats },
+                    $or: [{ tourName: keyword }, { address: keyword }],
+                })
+                    .populate('guide')
+                    .populate('category')
+                    .lean()
+                    .skip(page * 8)
+                    .limit(8);
+                allTours = await Tour.find({
+                    availableSeats: { $gte: availableSeats },
+                    $or: [{ tourName: keyword }, { address: keyword }],
+                });
             } else {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats } })
                     .populate('guide')
                     .populate('category')
+                    .lean()
                     .skip(page * 8)
                     .limit(8);
                 allTours = await Tour.find({ availableSeats: { $gte: availableSeats } });
@@ -143,7 +160,7 @@ export const getTourBySearch = async (req, res) => {
 
 export const getFeaturedTour = async (req, res) => {
     try {
-        const tours = await Tour.find({}).populate('guide').populate('category').limit(8);
+        const tours = await Tour.find({ featured: true }).lean().populate('guide').populate('category').limit(8);
         const updatedTours = await Promise.all(
             tours.map(async (tour) => {
                 const result = await Review.aggregate([
