@@ -71,38 +71,53 @@ export const getAllTour = async (req, res) => {
                 return tour;
             }),
         );
-        res.status(200).json({ success: true, data: updatedTours });
+        const allTours = await Tour.find({});
+        res.status(200).json({ success: true, count: allTours.length, data: updatedTours });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
 };
 
 export const getTourBySearch = async (req, res) => {
-    const address = req.query.address;
+    const page = parseInt(req.query.page);
+    const address = new RegExp(req.query.address, 'i');
     const availableSeats = parseInt(req.query.availableSeats) || 1;
     const category = req.query.category;
     let tours = {};
+    let allTours = {};
 
     try {
         if (address) {
             if (category) {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address, category })
                     .populate('guide')
-                    .populate('category');
+                    .populate('category')
+                    .skip(page * 8)
+                    .limit(8);
+                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, address, category });
             } else {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats }, address })
                     .populate('guide')
-                    .populate('category');
+                    .populate('category')
+                    .skip(page * 8)
+                    .limit(8);
+                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, address });
             }
         } else {
             if (category) {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats }, category })
                     .populate('guide')
-                    .populate('category');
+                    .populate('category')
+                    .skip(page * 8)
+                    .limit(8);
+                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, category });
             } else {
                 tours = await Tour.find({ availableSeats: { $gte: availableSeats } })
                     .populate('guide')
-                    .populate('category');
+                    .populate('category')
+                    .skip(page * 8)
+                    .limit(8);
+                allTours = await Tour.find({ availableSeats: { $gte: availableSeats } });
             }
         }
 
@@ -120,7 +135,7 @@ export const getTourBySearch = async (req, res) => {
                 return tour;
             }),
         );
-        res.status(200).json({ success: true, data: updatedTours });
+        res.status(200).json({ success: true, count: allTours.length, data: updatedTours });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
