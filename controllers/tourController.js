@@ -82,59 +82,137 @@ export const getTourBySearch = async (req, res) => {
     const page = parseInt(req.query.page);
     const availableSeats = parseInt(req.query.availableSeats) || 1;
     const category = req.query.category;
+    const minDuration = req.query.minDuration;
+    const maxDuration = req.query.maxDuration;
     const keyword = new RegExp(req.query.keyword, 'i');
     let tours = {};
     let allTours = {};
     try {
         if (category) {
             if (keyword) {
-                tours = await Tour.find({
-                    availableSeats: { $gte: availableSeats },
-                    category,
-                    $or: [{ tourName: keyword }, { address: keyword }],
-                })
-                    .populate('guide')
-                    .populate('category')
-                    .lean()
-                    .skip(page * 8)
-                    .limit(8);
-                allTours = await Tour.find({
-                    availableSeats: { $gte: availableSeats },
-                    category,
-                    $or: [{ tourName: keyword }, { address: keyword }],
-                });
+                if (minDuration && maxDuration) {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        category,
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        category,
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    });
+                } else {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        category,
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        category,
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    });
+                }
             } else {
-                tours = await Tour.find({ availableSeats: { $gte: availableSeats }, category })
-                    .populate('guide')
-                    .populate('category')
-                    .lean()
-                    .skip(page * 8)
-                    .limit(8);
-                allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, category });
+                if (minDuration && maxDuration) {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        category,
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        category,
+                    });
+                } else {
+                    tours = await Tour.find({ availableSeats: { $gte: availableSeats }, category })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({ availableSeats: { $gte: availableSeats }, category });
+                }
             }
         } else {
             if (keyword) {
-                tours = await Tour.find({
-                    availableSeats: { $gte: availableSeats },
-                    $or: [{ tourName: keyword }, { address: keyword }],
-                })
-                    .populate('guide')
-                    .populate('category')
-                    .lean()
-                    .skip(page * 8)
-                    .limit(8);
-                allTours = await Tour.find({
-                    availableSeats: { $gte: availableSeats },
-                    $or: [{ tourName: keyword }, { address: keyword }],
-                });
+                if (minDuration && maxDuration) {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    });
+                } else {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        $or: [{ tourName: keyword }, { address: keyword }],
+                    });
+                }
             } else {
-                tours = await Tour.find({ availableSeats: { $gte: availableSeats } })
-                    .populate('guide')
-                    .populate('category')
-                    .lean()
-                    .skip(page * 8)
-                    .limit(8);
-                allTours = await Tour.find({ availableSeats: { $gte: availableSeats } });
+                if (minDuration && maxDuration) {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                        duration: { $gte: minDuration, $lte: maxDuration },
+                    });
+                } else {
+                    tours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                    })
+                        .populate('guide')
+                        .populate('category')
+                        .lean()
+                        .skip(page * 8)
+                        .limit(8);
+                    allTours = await Tour.find({
+                        availableSeats: { $gte: availableSeats },
+                    });
+                }
             }
         }
 
