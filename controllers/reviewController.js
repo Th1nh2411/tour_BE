@@ -20,10 +20,17 @@ export const createReview = async (req, res) => {
 };
 export const getAllReviewById = async (req, res) => {
     const id = req.params.id;
+    const page = parseInt(req.query.page);
+    const rating = parseInt(req.query.rating);
     try {
-        const reviews = await Review.find({ tourInfo: id }).populate('tourInfo').populate('userInfo');
-
-        res.status(200).json({ success: true, data: reviews });
+        const reviews = await Review.find({ tourInfo: id, rating })
+            .populate('tourInfo')
+            .populate('userInfo')
+            .sort({ createdAt: -1 })
+            .skip(page * 5)
+            .limit(5);
+        const allReviews = await Review.find({ tourInfo: id, rating });
+        res.status(200).json({ success: true, count: allReviews.length, data: reviews });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
