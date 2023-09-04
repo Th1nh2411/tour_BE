@@ -34,6 +34,7 @@ async function seed() {
                 fullName: 'Phạm Minh Mạnh',
                 phoneNumber: '0961592551',
                 address: 'Quang Trung, Thống Nhất, Đồng Nai',
+                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f88',
@@ -41,8 +42,9 @@ async function seed() {
                 email: 'ducthinh@gmail.com',
                 password: '$2a$10$pVN6f.l9WXqsQxifG89kTOewLKmN6BxXjFoqIUra5MIBcc6Z8yhtW',
                 fullName: 'Nguyễn Đức Thịnh',
-                phoneNumber: '0966666666',
+                phoneNumber: '0966666566',
                 address: 'Kontum',
+                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f89',
@@ -53,6 +55,7 @@ async function seed() {
                 phoneNumber: '0966666666',
                 address: 'Kontum',
                 role: 'admin',
+                isActive: true,
             },
         ];
         await User.insertMany(userData);
