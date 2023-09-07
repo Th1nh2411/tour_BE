@@ -9,17 +9,18 @@ import {
 } from '../controllers/tourController.js';
 
 import { verifyAdmin, verifyToken } from '../utils/authenticate.js';
+import { checkExistTour, checkExistTourName } from '../utils/checkExist.js';
 
 const router = express.Router();
 
 //Create new tour
-router.post('/', verifyToken, verifyAdmin, createTour);
+router.post('/', verifyToken, verifyAdmin, checkExistTourName, createTour);
 
 //Update tour
-router.put('/:id', verifyToken, verifyAdmin, updateTour);
+router.put('/:id', verifyToken, verifyAdmin, checkExistTour, checkExistTourName, updateTour);
 
 //Get single tour
-router.get('/:id', getDetailTour);
+router.get('/:id', checkExistTour, getDetailTour);
 
 //Get all tour
 router.get('/', getAllTour);

@@ -8,13 +8,11 @@ const guideSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            unique: true,
             required: true,
         },
         phoneNumber: {
             type: String,
             required: true,
-            unique: true,
         },
         languages: {
             type: String,

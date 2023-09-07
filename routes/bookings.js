@@ -7,13 +7,14 @@ import {
     checkBooking,
 } from '../controllers/bookingController.js';
 import { verifyUser, verifyToken } from '../utils/authenticate.js';
-import { checkDateBooking } from '../utils/checkCreate.js';
+import { checkActiveAccount, checkDateBooking } from '../utils/checkCreate.js';
+import { checkExistBooking } from '../utils/checkExist.js';
 const router = express.Router();
 
-router.post('/', verifyToken, verifyUser, checkDateBooking, createBooking);
-router.get('/:id', verifyToken, getDetailBooking);
+router.post('/', verifyToken, verifyUser, checkActiveAccount, checkDateBooking, createBooking);
+router.get('/:id', verifyToken, checkExistBooking, getDetailBooking);
 router.get('/check/payment', verifyToken, checkBooking);
 router.get('/', verifyToken, getAllBooking);
-router.post('/cancel/:id', verifyToken, cancelBooking);
+router.post('/cancel/:id', verifyToken, checkExistBooking, cancelBooking);
 
 export default router;

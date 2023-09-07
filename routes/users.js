@@ -9,28 +9,27 @@ import {
     createUser,
     forgotPassword,
     verify,
-    activeUser,
-    verifyActiveUser,
+    active,
 } from '../controllers/userController.js';
 
 import { verifyAdmin, verifyToken, verifyUser } from '../utils/authenticate.js';
+import { checkExistPhoneNumber, checkExistUser } from '../utils/checkExist.js';
 
 const router = express.Router();
 
 //Update user
-router.put('/profile', verifyToken, updateUser);
-router.get('/active', verifyToken, activeUser);
-router.post('/active', verifyToken, verifyActiveUser);
+router.put('/profile', checkExistPhoneNumber, verifyToken, updateUser);
+router.get('/active', verifyToken, active);
 router.put('/changepassword', verifyToken, changePassword);
 router.post('/forgotpassword', forgotPassword);
 router.post('/forgotpassword/verify', verify);
 router.post('/forgotpassword/success', accessForgotPassword);
 router.post('/create', verifyToken, verifyAdmin, createUser);
 
-router.delete('/:id', verifyToken, verifyUser, deleteUser);
+router.delete('/:id', verifyToken, verifyUser, checkExistUser, deleteUser);
 
 //Get single user
-router.get('/:id', verifyToken, verifyUser, getDetailUser);
+router.get('/:id', verifyToken, verifyUser, checkExistUser, getDetailUser);
 
 //Get all user
 router.get('/', verifyToken, verifyAdmin, getAllUser);
