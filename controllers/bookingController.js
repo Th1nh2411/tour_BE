@@ -54,7 +54,7 @@ export const createBooking = async (req, res) => {
                             { new: true },
                         );
                     }
-                    res.status(200).json({ success: true, message: 'Đặt tour thành công' });
+                    res.status(200).json({ success: true, message: 'Đặt tour thành công', data: newBooking });
                 } else if (user.rank == 1) {
                     const newBooking = new Booking({
                         userInfo: req.user.id,
@@ -95,6 +95,7 @@ export const createBooking = async (req, res) => {
                     res.status(200).json({
                         success: true,
                         message: 'Đặt tour thành công. Hạng của bạn là Đồng, bạn được giảm 5%',
+                        data: newBooking,
                     });
                 } else if (user.rank == 2) {
                     const newBooking = new Booking({
@@ -136,6 +137,7 @@ export const createBooking = async (req, res) => {
                     res.status(200).json({
                         success: true,
                         message: 'Đặt tour thành công. Hạng của bạn là Bạc, bạn được giảm 10%',
+                        data: newBooking,
                     });
                 } else {
                     const newBooking = new Booking({
@@ -177,6 +179,7 @@ export const createBooking = async (req, res) => {
                     res.status(200).json({
                         success: true,
                         message: 'Đặt tour thành công. Hạng của bạn là Vàng, bạn được giảm 15%',
+                        data: newBooking,
                     });
                 }
             }
