@@ -17,11 +17,12 @@ export const createUser = async (req, res) => {
 
 //Update User
 export const updateUser = async (req, res) => {
+    const id = req.user.id;
     try {
         await User.findByIdAndUpdate(
             id,
             {
-                $set: req.user.id,
+                $set: req.body,
             },
             { new: true },
         );
