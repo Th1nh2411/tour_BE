@@ -184,7 +184,7 @@ export const createBooking = async (req, res) => {
                 }
             }
         } else {
-            res.status(400).json({ success: false, message: `You have an unpaid booking, you can't book more` });
+            res.status(400).json({ success: false, message: `Bạn có tour chưa thanh toán, không thể đặt thêm` });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
