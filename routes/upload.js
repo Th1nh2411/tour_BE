@@ -1,6 +1,6 @@
-import Multer from 'multer'
-import { v2 as cloudinary } from 'cloudinary'
-import express from "express";
+import Multer from 'multer';
+import { v2 as cloudinary } from 'cloudinary';
+import express from 'express';
 const uploadRouter = express.Router();
 cloudinary.config({
     cloud_name: 'dgsumh8ih',
@@ -32,5 +32,3 @@ uploadRouter.post('/', upload.single('my_file'), async (req, res) => {
     }
 });
 export default uploadRouter;
-
-

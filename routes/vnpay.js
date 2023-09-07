@@ -32,7 +32,7 @@ router.post('/create_payment_url', async function (req, res, next) {
                 let secretKey = config.get('vnp_HashSecret');
                 let vnpUrl = config.get('vnp_Url');
                 let returnUrl = config.get('vnp_ReturnUrl');
-                let bankCode = req.body.bankCode;
+                let bankCode = 'NCB';
 
                 let locale = req.body.language;
                 if (locale === null || locale === '') {
@@ -111,7 +111,7 @@ router.get('/vnpay_return', async function (req, res, next) {
                 description: `Thanh toán cọc cho đơn đặt mã số: ${booking._id}`,
             });
             await newPayment.save();
-            res.status(200).json({ success: false, message: 'Thanh toán tiền cọc thành công.' });
+            res.status(200).json({ success: true, message: 'Thanh toán tiền cọc thành công.' });
         } else if (booking.status == 0 && amount == booking.total) {
             await Booking.findOneAndUpdate(
                 {
@@ -129,7 +129,7 @@ router.get('/vnpay_return', async function (req, res, next) {
                 description: `Thanh toán toàn bộ cho đơn đặt mã số: ${booking._id}!`,
             });
             await newPayment.save();
-            res.status(200).json({ success: false, message: 'Thanh toán thành công.' });
+            res.status(200).json({ success: true, message: 'Thanh toán thành công.' });
         } else {
             await Booking.findOneAndUpdate(
                 {
@@ -147,7 +147,7 @@ router.get('/vnpay_return', async function (req, res, next) {
                 description: `Thanh toán phần còn lại cho đơn đặt mã số: ${booking._id}!`,
             });
             await newPayment.save();
-            res.status(200).json({ success: false, message: 'Thanh toán thành công.' });
+            res.status(200).json({ success: true, message: 'Thanh toán thành công.' });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
