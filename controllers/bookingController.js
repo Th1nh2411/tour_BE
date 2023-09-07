@@ -191,6 +191,22 @@ export const createBooking = async (req, res) => {
     }
 };
 
+export const checkBooking = async (req, res) => {
+    try {
+        const check = await Booking.findOne({
+            id_user: req.user.id,
+            $or: [{ status: 1 }, { status: 0 }],
+        });
+        if (check) {
+            res.status(200).json({ success: true, data: check });
+        } else {
+            res.status(200).json({ success: false, data: [] });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
 export const cancelBooking = async (req, res) => {
     const id = req.params.id;
     try {
