@@ -37,7 +37,7 @@ router.post('/create_payment_url', async function (req, res, next) {
                 let bankCode = 'NCB';
 
                 let locale = req.body.language;
-                if (locale === null || locale === '') {
+                if (locale === null || locale === '' || locale === undefined) {
                     locale = 'vn';
                 }
                 let currCode = 'VND';
