@@ -85,7 +85,7 @@ export const checkExistTour = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const check = await Tour.findById({ id });
+        const check = await Tour.findById(id);
         if (check) {
             next();
         } else {
@@ -99,8 +99,7 @@ export const checkExistTour = async (req, res, next) => {
 export const checkExistBooking = async (req, res, next) => {
     try {
         const id = req.params.id;
-
-        const check = await Booking.findById({ id });
+        const check = await Booking.findById(id);
         if (check) {
             next();
         } else {
@@ -115,7 +114,7 @@ export const checkExistCategory = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const check = await Category.findById({ id });
+        const check = await Category.findById(id);
         if (check) {
             next();
         } else {
@@ -130,7 +129,7 @@ export const checkExistGuide = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const check = await Guide.findById({ id });
+        const check = await Guide.findById(id);
         if (check) {
             next();
         } else {
@@ -145,7 +144,7 @@ export const checkExistUser = async (req, res, next) => {
     try {
         const id = req.params.id;
 
-        const check = await User.findById({ id });
+        const check = await User.findById(id);
         if (check) {
             next();
         } else {
