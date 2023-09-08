@@ -16,6 +16,8 @@ router.post('/create_payment_url', async function (req, res, next) {
         if (booking) {
             if (booking.status == 2) {
                 res.status(400).json({ success: false, message: 'Hoá đơn của bạn đã được thanh toán.' });
+            } else if (booking.status == -1) {
+                res.status(400).json({ success: false, message: 'Hoá đơn của bạn đã huỷ.' });
             } else {
                 process.env.TZ = 'Asia/Ho_Chi_Minh';
 
@@ -28,10 +30,10 @@ router.post('/create_payment_url', async function (req, res, next) {
                     req.socket.remoteAddress ||
                     req.connection.socket.remoteAddress;
 
-                let tmnCode = config.get('vnp_TmnCode');
-                let secretKey = config.get('vnp_HashSecret');
-                let vnpUrl = config.get('vnp_Url');
-                let returnUrl = config.get('vnp_ReturnUrl');
+                let tmnCode = config.vnp_TmnCode;
+                let secretKey = config.vnp_HashSecret;
+                let vnpUrl = config.vnp_Url;
+                let returnUrl = config.vnp_ReturnUrl;
                 let bankCode = 'NCB';
 
                 let locale = req.body.language;
@@ -49,11 +51,11 @@ router.post('/create_payment_url', async function (req, res, next) {
                 vnp_Params['vnp_OrderInfo'] = 'Thanh toán cho mã đơn hàng:' + id_order;
                 vnp_Params['vnp_OrderType'] = 'other';
                 if (booking.status == 0 && flag == 1) {
-                    vnp_Params['vnp_Amount'] = order.total * 20;
+                    vnp_Params['vnp_Amount'] = booking.total * 20;
                 } else if (booking.status == 0 && flag == 2) {
-                    vnp_Params['vnp_Amount'] = order.total * 100;
+                    vnp_Params['vnp_Amount'] = booking.total * 100;
                 } else {
-                    vnp_Params['vnp_Amount'] = order.total * 80;
+                    vnp_Params['vnp_Amount'] = booking.total * 80;
                 }
                 vnp_Params['vnp_ReturnUrl'] = returnUrl;
                 vnp_Params['vnp_IpAddr'] = ipAddr;
@@ -88,7 +90,7 @@ router.get('/vnpay_return', async function (req, res, next) {
         let id_order = vnp_Params.vnp_TxnRef;
         let amount = vnp_Params.vnp_Amount;
 
-        let secretKey = config.get('vnp_HashSecret');
+        let secretKey = config.vnp_HashSecret;
 
         let signData = querystring.stringify(vnp_Params, { encode: false });
         let hmac = crypto.createHmac('sha512', secretKey);
@@ -158,9 +160,9 @@ router.post('/refund', function (req, res, next) {
     process.env.TZ = 'Asia/Ho_Chi_Minh';
     let date = new Date();
 
-    let vnp_TmnCode = config.get('vnp_TmnCode');
-    let secretKey = config.get('vnp_HashSecret');
-    let vnp_Api = config.get('vnp_Api');
+    let vnp_TmnCode = config.vnp_TmnCode;
+    let secretKey = config.vnp_HashSecret;
+    let vnp_Api = config.vnp_Api;
 
     let vnp_TxnRef = req.body.id_order;
     let vnp_TransactionDate = req.body.transDate;
