@@ -155,7 +155,7 @@ async function seed() {
                 description:
                     'Hành trình phiêu lưu đến hang động lớn nhất thế giới và khám phá cảnh quan kỳ vĩ bên trong.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155640/download_on0pyo.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155640/download_on0pyo.jpg',
                 price: '5000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -176,7 +176,7 @@ async function seed() {
                 description:
                     'Trải nghiệm cuộc sống hoang dã và theo dõi các con vật trong môi trường tự nhiên của công viên quốc gia Serengeti.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155678/Di_safari_o_Tanzania_06_rim0uv.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155678/Di_safari_o_Tanzania_06_rim0uv.jpg',
                 price: '12000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -191,7 +191,7 @@ async function seed() {
                 tourName: 'Khám phá dưới lòng biển Maldives',
                 description: 'Trải nghiệm cuộc sống biển và khám phá vẻ đẹp đáy biển tuyệt đẹp của Quần đảo Maldives.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155719/Travelpx-Soneva-Jani-2_vhhi0z.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155719/Travelpx-Soneva-Jani-2_vhhi0z.jpg',
                 price: '15000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -207,7 +207,7 @@ async function seed() {
                 description:
                     'Chinh phục đỉnh cao nhất miền Trung Việt Nam và thưởng thức cảnh quan tuyệt đẹp từ trên cao.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155740/momo-upload-api-210817095950-637647911908409737_wewd8m.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155740/momo-upload-api-210817095950-637647911908409737_wewd8m.jpg',
                 price: '8000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -227,7 +227,7 @@ async function seed() {
                 description:
                     'Tận hưởng cuộc sống ngoài trời khi kayak qua những điểm nổi tiếng trên dòng sông Colorado.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155759/cc8qb9rmjoxgsl2wx7fe_r9nmrg.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155759/cc8qb9rmjoxgsl2wx7fe_r9nmrg.webp',
                 price: '7000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -247,7 +247,7 @@ async function seed() {
                 description:
                     'Hãy cùng tham gia chuyến hành trình để khám phá vẻ đẹp thiên nhiên hoang dã và sự đa dạng sinh học của rừng Amazon.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156745/amazon_reqe5d.png',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693156745/amazon_reqe5d.png',
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -267,7 +267,7 @@ async function seed() {
                 description:
                     'Hành trình hấp dẫn qua những ngọn núi cao của dãy Himalaya và thưởng ngoạn cảnh quan tuyệt đẹp từ trên cao.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156760/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006_edit_1_ivf6ma.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693156760/Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006_edit_1_ivf6ma.jpg',
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -287,7 +287,7 @@ async function seed() {
                 description:
                     'Trải nghiệm cuộc sống hang động đặc biệt và tiếp xúc gần gũi với các loài động vật sinh sống trong hang.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156780/photo-1-16557129434501079781148_fkaxpx.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693156780/photo-1-16557129434501079781148_fkaxpx.webp',
                 price: '8000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -307,7 +307,7 @@ async function seed() {
                 description:
                     'Thỏa mãn sự tò mò với cuộc sống biển đầy màu sắc và trải nghiệm lặn biển sâu tại Biển Đỏ.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156794/biendo-8037-1629873166_pi07xm.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693156794/biendo-8037-1629873166_pi07xm.jpg',
                 price: '14000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -327,7 +327,7 @@ async function seed() {
                 description:
                     'Trải nghiệm cuộc sống sa mạc độc đáo và ngắm cảnh hoàng hôn tuyệt đẹp trong chuyến xe jeep.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693156816/h1-1_eer3zk.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693156816/h1-1_eer3zk.jpg',
                 price: '20000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -347,7 +347,7 @@ async function seed() {
                 description:
                     'Tận hưởng những món ăn ngon và trải nghiệm văn hóa ẩm thực đặc trưng của Paris, thủ đô nổi tiếng với ẩm thực.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157429/du-lich-phap-kham-pha-5-khu-cho-noi-tieng-nhat-cua-paris-trang-le-paris_n7ha5h.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157429/du-lich-phap-kham-pha-5-khu-cho-noi-tieng-nhat-cua-paris-trang-le-paris_n7ha5h.jpg',
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -367,7 +367,7 @@ async function seed() {
                 description:
                     'Khám phá vùng đất nổi tiếng với rượu vang Toscana và tham gia vào quá trình sản xuất rượu vang từ cây nho đến chai rượu.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157448/du-lich-va-ruou-vang-italia-1_snwzyg.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157448/du-lich-va-ruou-vang-italia-1_snwzyg.jpg',
                 price: '12000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -383,7 +383,7 @@ async function seed() {
                 description:
                     'Trải nghiệm hương vị độc đáo của ẩm thực Thái Lan và tham dự các lễ hội ẩm thực tại thành phố sôi động Bangkok.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157476/le-hoi-am-thuc-1-1682053091624954770217_wowdlg.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157476/le-hoi-am-thuc-1-1682053091624954770217_wowdlg.jpg',
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -403,7 +403,7 @@ async function seed() {
                 description:
                     'Trải nghiệm hành trình qua các nhà máy chưng cất rượu, gặp gỡ nhà sản xuất rượu và thưởng thức rượu vang tại Napa Valley.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157513/webpc-passthru_hxpjz8.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157513/webpc-passthru_hxpjz8.webp',
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -423,7 +423,7 @@ async function seed() {
                 description:
                     'Trải nghiệm hương vị độc đáo của ẩm thực Kyoto và khám phá những địa điểm nổi tiếng với các món ăn truyền thống.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157538/H_00480_002_ozxgci.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157538/H_00480_002_ozxgci.webp',
                 price: '13000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -443,7 +443,7 @@ async function seed() {
                 description:
                     'Đắm mình trong không gian yên bình của vườn chè và tìm hiểu về quy trình chế biến chè truyền thống cùng với người dân địa phương.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157559/tc3a2m20chc3a2u_465fb531_akjk02.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157559/tc3a2m20chc3a2u_465fb531_akjk02.jpg',
                 price: '9000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -463,7 +463,7 @@ async function seed() {
                 description:
                     'Trải nghiệm một trong những lễ hội bia lớn nhất thế giới, cùng tham gia vào trò chơi và thưởng thức ẩm thực đặc sản.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157580/kham-pha-le-hoi-bia-oktoberfest-munich-germany_7_5_2018_10_56_20_xbbq2v.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157580/kham-pha-le-hoi-bia-oktoberfest-munich-germany_7_5_2018_10_56_20_xbbq2v.jpg',
                 price: '15000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -483,7 +483,7 @@ async function seed() {
                 description:
                     'Khám phá vùng đất nổi tiếng với rượu vang Bordeaux, tham quan các viện trồng nho và thưởng thức rượu vang trên du thuyền sông Gironde.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693157631/download_qpeeq7.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693157631/download_qpeeq7.jpg',
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -503,7 +503,7 @@ async function seed() {
                 description:
                     'Khám phá cảnh quan tuyệt đẹp của Vịnh Hạ Long, tham quan các hang động độc đáo và trải nghiệm cuộc sống trên du thuyền.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158306/du-lich-vinh-Ha-Long-hinh-anh1_1625911963_aqr0ze.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158306/du-lich-vinh-Ha-Long-hinh-anh1_1625911963_aqr0ze.jpg',
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -523,7 +523,7 @@ async function seed() {
                 description:
                     'Tận hưởng không gian sôi động của thành phố New York, tham quan các điểm danh tiếng và trải nghiệm văn hóa đa dạng.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158286/MyIC_Inline_74842_bl88qv.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158286/MyIC_Inline_74842_bl88qv.jpg',
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -543,7 +543,7 @@ async function seed() {
                 description:
                     'Tận hưởng nắng và biển tại Bãi biển Cancun, tham gia các hoạt động thể thao nước, khám phá di sản văn hóa của người Maya.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158262/cancun_220414_qsy6py.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158262/cancun_220414_qsy6py.webp',
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -563,7 +563,7 @@ async function seed() {
                 description:
                     'Khám phá vẻ đẹp tự nhiên của bãi biển Bali, tham gia các hoạt động lặn biển, thưởng thức ẩm thực địa phương và thả lỏng cơ thể trên bãi biển Nusa Dua.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158237/bien-broken-broken-beach-top-bai-bien-dep-nhat-bali-thaiantravel-2_zzytzk.webp',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158237/bien-broken-broken-beach-top-bai-bien-dep-nhat-bali-thaiantravel-2_zzytzk.webp',
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -583,7 +583,7 @@ async function seed() {
                 description:
                     'Tìm hiểu về văn hóa độc đáo của Nhật Bản qua việc tham quan các điểm du lịch văn hóa nổi tiếng, trải nghiệm trang phục Kimono và khám phá ngôi làng truyền thống.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158193/van_hoa_1_xiuvif.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158193/van_hoa_1_xiuvif.jpg',
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
@@ -603,7 +603,7 @@ async function seed() {
                 description:
                     'Trải nghiệm văn hóa Pháp qua việc khám phá Lâu đài Versailles, tham quan các điểm tham quan văn hóa nổi tiếng ở Paris và thưởng thức biểu diễn nghệ thuật độc đáo.',
                 duration: 3,
-                photo: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693158220/images1106887_1_iwvewz.jpg',
+                photo: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693158220/images1106887_1_iwvewz.jpg',
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,

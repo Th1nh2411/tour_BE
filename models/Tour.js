@@ -40,7 +40,7 @@ const tourSchema = new mongoose.Schema(
         },
         photo: {
             type: String,
-            default: 'https://res.cloudinary.com/dpgjnngzt/image/upload/v1693155640/download_on0pyo.jpg',
+            default: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1693155640/download_on0pyo.jpg',
         },
         price: {
             type: Number,
