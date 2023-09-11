@@ -6,6 +6,10 @@ const guideSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        photo: {
+            type: String,
+            default: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1692954334/anhdaidien_onsafn.jpg',
+        },
         email: {
             type: String,
             required: true,
@@ -15,6 +19,10 @@ const guideSchema = new mongoose.Schema(
             required: true,
         },
         languages: {
+            type: String,
+            required: true,
+        },
+        description: {
             type: String,
             required: true,
         },

@@ -7,6 +7,7 @@ import Review from '../models/Review.js';
 import Tour from '../models/Tour.js';
 import Wishlist from '../models/Wishlist.js';
 import mongoose from 'mongoose';
+import Feedback from '../models/Feedback.js';
 
 async function seed() {
     try {
@@ -112,23 +113,32 @@ async function seed() {
             {
                 _id: '6153f2e39c6c9bdf49ec1e01',
                 guideName: 'Nguyễn Minh Tú',
+                photo: 'https://www.cakeresume.com/cdn-cgi/image/fit=scale-down,format=auto,w=1200/https://images.cakeresume.com/images/cf8fab08-2298-4808-9f81-5ea2528c9671.jpg',
                 email: 'nguyenminhtu@gmail.com',
                 phoneNumber: '0845444999',
                 languages: 'Tiếng Anh, Tiếng Pháp',
+                description:
+                    'Xin chào! Tôi là Hướng dẫn viên Nguyễn Minh Tú, chuyên về du lịch văn hóa và lịch sử. Với hơn 10 năm kinh nghiệm, tôi đã có cơ hội hướng dẫn khách du lịch đến các điểm tham quan nổi tiếng trên toàn thế giới. Tôi sẽ đưa bạn trở về quá khứ để khám phá những câu chuyện thú vị về di sản văn hóa và lịch sử của mỗi địa điểm. Tôi tin rằng sự hiểu biết về quá khứ sẽ giúp bạn có cái nhìn đầy sáng tạo về hiện tại. Hãy để tôi làm người dẫn lối trong hành trình khám phá văn hóa và lịch sử này!',
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1e02',
                 guideName: 'Trần Hoàng Long',
+                photo: 'https://images.careerbuilder.vn/content/news/01BinhMKT/news/20180122.jpg',
                 email: 'tranhoanglong@gmail.com',
                 phoneNumber: '0972777123',
                 languages: 'Tiếng Trung, Tiếng Pháp',
+                description:
+                    'Xin chào! Tôi là Hướng dẫn viên Trần Hoàng Long, chuyên về du lịch thể thao và phong cảnh. Nếu bạn yêu thích sự mạo hiểm và muốn khám phá những vùng đất hoang dã, tôi sẽ là người dẫn đường tốt nhất cho bạn. Với kinh nghiệm tham gia nhiều hoạt động như leo núi, đi xe đạp địa hình và trượt tuyết, tôi sẽ đưa bạn đến những ngọn núi cao, những hang động huyền bí và những bãi biển hoang sơ. Hãy chuẩn bị bỏ túi những trải nghiệm thú vị cùng tôi!',
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1e03',
                 guideName: 'Trương Phạm Trí Cường',
+                photo: 'https://www.chuphinhsanpham.vn/wp-content/uploads/2022/02/chup-hinh-cv-profile-hcm-0004.jpg',
                 email: 'cuongtruong@gmail.com',
                 phoneNumber: '0762151251',
                 languages: 'Tiếng Hàn, Tiếng Nhật',
+                description:
+                    'Xin chào! Tôi là Hướng dẫn viên Trương Phạm Trí Cường, sẵn sàng đưa bạn trở thành một du khách thực sự trong hành trình khám phá ẩm thực. Với tôi, ẩm thực không chỉ là việc thưởng thức những món ngon đặc sản địa phương, mà còn là cách để hiểu sâu sắc văn hóa và con người của mỗi nơi bạn đến. Tôi sẽ dẫn bạn đến những chợ địa phương, những nhà hàng nổi tiếng và tham gia trực tiếp vào quá trình chuẩn bị món ăn. Cùng tôi, bạn sẽ có trải nghiệm gợi mở mọi giác quan và tìm hiểu về những bí quyết của ẩm thực địa phương. Hãy chuẩn bị bụng và tinh thần để cùng tôi khám phá văn hóa đa dạng của ẩm thực!',
             },
         ];
         await Guide.insertMany(guideData);
@@ -651,6 +661,41 @@ async function seed() {
             .catch((err) => {
                 console.error('Error creating Booking collection:', err);
             });
+        await Feedback.createCollection()
+            .then(() => {
+                console.log('Feedback collection created');
+            })
+            .catch((err) => {
+                console.error('Error creating Feedback collection:', err);
+            });
+        const feedbackData = [
+            {
+                userInfo: '6153f2e39c6c9bdf49ec1f87',
+                message:
+                    'Tour du lịch này thật tuyệt vời! Tôi đã có cơ hội khám phá những địa điểm đẹp và trải nghiệm văn hóa mới mẻ.',
+            },
+            {
+                userInfo: '6153f2e39c6c9bdf49ec1f88',
+                message:
+                    'Tôi rất hài lòng với tour du lịch này. Hướng dẫn viên rất chuyên nghiệp và am hiểu, giúp tôi có một trải nghiệm thú vị và không bỏ qua bất kỳ điểm tham quan quan trọng nào.',
+            },
+            {
+                userInfo: '6153f2e39c6c9bdf49ec1f87',
+                message:
+                    'Tour du lịch của các bạn đã mang lại cho tôi những kỷ niệm khó quên. Tôi được tham gia vào các hoạt động phiêu lưu, thưởng thức ẩm thực đặc sản và gặp gỡ những người bạn mới.',
+            },
+            {
+                userInfo: '6153f2e39c6c9bdf49ec1f88',
+                message:
+                    'Tour du lịch thật tuyệt vời! Cảnh quan tuyệt đẹp, khí hậu dễ chịu và dịch vụ chăm sóc khách hàng xuất sắc đã khiến chuyến đi của tôi trở thành một kỷ niệm không thể quên.',
+            },
+            {
+                userInfo: '6153f2e39c6c9bdf49ec1f88',
+                message:
+                    'Cảm ơn công ty đã mang lại cho tôi sự thoải mái và giảm căng thẳng sau những ngày làm việc căng thẳng. Tôi đã có thời gian để thư giãn, tận hưởng và khám phá những điều mới mẻ.',
+            },
+        ];
+        await Feedback.insertMany(feedbackData);
 
         await Payment.createCollection()
             .then(() => {
