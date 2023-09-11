@@ -9,6 +9,7 @@ import categoryRouter from './category.js';
 import guideRouter from './guide.js';
 import wishlistRouter from './wishlist.js';
 import vnpayRouter from './vnpay.js';
+import feedbackRouter from './feedback.js';
 const rootRouter = express.Router();
 
 rootRouter.use('/auth', authRouter);
@@ -21,4 +22,5 @@ rootRouter.use('/category', categoryRouter);
 rootRouter.use('/guide', guideRouter);
 rootRouter.use('/wishlist', wishlistRouter);
 rootRouter.use('/vnpay', vnpayRouter);
+rootRouter.use('/feedback', feedbackRouter);
 export default rootRouter;
