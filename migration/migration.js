@@ -6,8 +6,9 @@ import Payment from '../models/Payment.js';
 import Review from '../models/Review.js';
 import Tour from '../models/Tour.js';
 import Wishlist from '../models/Wishlist.js';
-import mongoose from 'mongoose';
 import Feedback from '../models/Feedback.js';
+import Messenger from '../models/Messenger.js';
+import mongoose from 'mongoose';
 
 async function seed() {
     try {
@@ -704,7 +705,13 @@ async function seed() {
             .catch((err) => {
                 console.error('Error creating Payment collection:', err);
             });
-
+        await Messenger.createCollection()
+            .then(() => {
+                console.log('Messenger collection created');
+            })
+            .catch((err) => {
+                console.error('Error creating Messenger collection:', err);
+            });
         await Wishlist.createCollection()
             .then(() => {
                 console.log('Wishlist collection created');

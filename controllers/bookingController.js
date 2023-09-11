@@ -200,7 +200,7 @@ export const checkBooking = async (req, res) => {
         if (check) {
             res.status(200).json({ success: true, data: check });
         } else {
-            res.status(200).json({ success: false, data: [] });
+            res.status(400).json({ success: false, data: null });
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });

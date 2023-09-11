@@ -31,6 +31,8 @@ async function deleteCollections() {
             deleteCollection('tours'),
             deleteCollection('users'),
             deleteCollection('wishlists'),
+            deleteCollection('messengers'),
+            deleteCollection('feedbacks'),
         ]);
         console.log('All collections deleted successfully.');
     } catch (error) {
