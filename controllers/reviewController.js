@@ -46,3 +46,16 @@ export const getAllReviewById = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+export const get8LatestReview = async (req, res) => {
+    try {
+        const reviews = await Review.find({})
+            .populate('tourInfo')
+            .populate('userInfo')
+            .sort({ createdAt: -1 })
+            .limit(8);
+        res.status(200).json({ success: true, data: reviews });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
