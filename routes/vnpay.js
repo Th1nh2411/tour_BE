@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import querystring from 'qs';
-import config from '../config/default.json' assert { type: 'json' };
+import vnpayConfig from '../config/vnpayConfig.js';
 import crypto from 'crypto';
 import Booking from '../models/Booking.js';
 import Payment from '../models/Payment.js';
@@ -30,10 +30,10 @@ router.post('/create_payment_url', async function (req, res, next) {
                     req.socket.remoteAddress ||
                     req.connection.socket.remoteAddress;
 
-                let tmnCode = config.vnp_TmnCode;
-                let secretKey = config.vnp_HashSecret;
-                let vnpUrl = config.vnp_Url;
-                let returnUrl = config.vnp_ReturnUrl;
+                let tmnCode = vnpayConfig.vnp_TmnCode;
+                let secretKey = vnpayConfig.vnp_HashSecret;
+                let vnpUrl = vnpayConfig.vnp_Url;
+                let returnUrl = vnpayConfig.vnp_ReturnUrl;
                 let bankCode = 'NCB';
 
                 let locale = req.body.language;
