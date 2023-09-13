@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import rootRouter from './routes/index.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+
 import db from './utils/db.js';
 dotenv.config();
 
@@ -27,7 +28,7 @@ io.on('connection', (socket) => {
 
 const port = process.env.PORT || 8000;
 const corsOptions = {
-    origin: process.env.ENV === 'dev' ? true : 'http://holidate.vercel.app',
+    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
     credentials: true,
 };
 //database connection
