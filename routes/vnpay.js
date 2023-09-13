@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import querystring from 'qs';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import config from '../config/default.json' assert { type: 'json' };
 import crypto from 'crypto';
 import Booking from '../models/Booking.js';
@@ -22,7 +22,7 @@ router.post('/create_payment_url', async function (req, res, next) {
                 process.env.TZ = 'Asia/Ho_Chi_Minh';
 
                 let date = new Date();
-                let createDate = moment(date).format('YYYYMMDDHHmmss');
+                let createDate = dayjs(date).format('YYYYMMDDHHmmss');
 
                 let ipAddr =
                     req.headers['x-forwarded-for'] ||
@@ -172,7 +172,7 @@ router.post('/refund', function (req, res, next) {
 
     let currCode = 'VND';
 
-    let vnp_RequestId = moment(date).format('HHmmss');
+    let vnp_RequestId = dayjs(date).format('HHmmss');
     let vnp_Version = '2.1.0';
     let vnp_Command = 'refund';
     let vnp_OrderInfo = 'Hoan tien GD ma:' + vnp_TxnRef;
@@ -183,7 +183,7 @@ router.post('/refund', function (req, res, next) {
         req.socket.remoteAddress ||
         req.connection.socket.remoteAddress;
 
-    let vnp_CreateDate = moment(date).format('YYYYMMDDHHmmss');
+    let vnp_CreateDate = dayjs(date).format('YYYYMMDDHHmmss');
 
     let vnp_TransactionNo = '0';
 
