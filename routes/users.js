@@ -10,6 +10,7 @@ import {
     forgotPassword,
     verify,
     active,
+    getAllStaff,
 } from '../controllers/userController.js';
 
 import { verifyAdmin, verifyToken, verifyUser } from '../utils/authenticate.js';
@@ -33,5 +34,6 @@ router.get('/:id', verifyToken, verifyUser, checkExistUser, getDetailUser);
 
 //Get all user
 router.get('/', verifyToken, verifyAdmin, getAllUser);
+router.get('/messenger/chat', verifyToken, verifyUser, getAllStaff);
 
 export default router;
