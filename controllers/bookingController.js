@@ -1,41 +1,284 @@
-import Booking from './../models/Booking.js'
-
+import Booking from '../models/Booking.js';
+import Tour from '../models/Tour.js';
+import User from '../models/User.js';
 
 // create new booking
-export const createBooking = async(req,res) => {
-   const newBooking = new Booking(req.body)
+export const createBooking = async (req, res) => {
+    const { tourInfo, guestSize } = req.body;
+    try {
+        const check = await Booking.findOne({
+            tourInfo,
+            status: 0,
+        });
+        if (!check) {
+            const tour = await Tour.findById(tourInfo);
+            if (tour.availableSeats < guestSize) {
+                res.status(400).json({ success: false, message: 'Số lượng chỗ ngồi còn lại không đủ' });
+            } else {
+                const user = await User.findById(req.user.id);
+                const count = await Booking.countDocuments({ userInfo: req.user.id, status: 2 });
+                if (user.rank == 0) {
+                    const newBooking = new Booking({
+                        userInfo: req.user.id,
+                        tourInfo,
+                        guestSize,
+                        startDate: tour.startDate,
+                        endDate: tour.endDate,
+                        total: guestSize * tour.price,
+                    });
+                    await newBooking.save();
+                    if (count == 3) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 1,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 5) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 2,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 10) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 3,
+                            },
+                            { new: true },
+                        );
+                    }
+                    res.status(200).json({ success: true, message: 'Đặt tour thành công', data: newBooking });
+                } else if (user.rank == 1) {
+                    const newBooking = new Booking({
+                        userInfo: req.user.id,
+                        tourInfo,
+                        guestSize,
+                        startDate: tour.startDate,
+                        endDate: tour.endDate,
+                        total: guestSize * tour.price * 0.95,
+                    });
+                    await newBooking.save();
+                    if (count == 3) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 1,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 5) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 2,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 10) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 3,
+                            },
+                            { new: true },
+                        );
+                    }
+                    res.status(200).json({
+                        success: true,
+                        message: 'Đặt tour thành công. Hạng của bạn là Đồng, bạn được giảm 5%',
+                        data: newBooking,
+                    });
+                } else if (user.rank == 2) {
+                    const newBooking = new Booking({
+                        userInfo: req.user.id,
+                        tourInfo,
+                        guestSize,
+                        startDate: tour.startDate,
+                        endDate: tour.endDate,
+                        total: guestSize * tour.price * 0.9,
+                    });
+                    await newBooking.save();
+                    if (count == 3) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 1,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 5) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 2,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 10) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 3,
+                            },
+                            { new: true },
+                        );
+                    }
+                    res.status(200).json({
+                        success: true,
+                        message: 'Đặt tour thành công. Hạng của bạn là Bạc, bạn được giảm 10%',
+                        data: newBooking,
+                    });
+                } else {
+                    const newBooking = new Booking({
+                        userInfo: req.user.id,
+                        tourInfo,
+                        guestSize,
+                        startDate: tour.startDate,
+                        endDate: tour.endDate,
+                        total: guestSize * tour.price * 0.85,
+                    });
+                    await newBooking.save();
+                    if (count == 3) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 1,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 5) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 2,
+                            },
+                            { new: true },
+                        );
+                    }
+                    if (count == 10) {
+                        await User.findByIdAndUpdate(
+                            req.user.id,
+                            {
+                                rank: 3,
+                            },
+                            { new: true },
+                        );
+                    }
+                    res.status(200).json({
+                        success: true,
+                        message: 'Đặt tour thành công. Hạng của bạn là Vàng, bạn được giảm 15%',
+                        data: newBooking,
+                    });
+                }
+            }
+        } else {
+            res.status(400).json({ success: false, message: `Bạn có tour chưa thanh toán, không thể đặt thêm` });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
-   try {
-      const savedBooking = await newBooking.save()
+export const checkBooking = async (req, res) => {
+    try {
+        const check = await Booking.findOne({
+            id_user: req.user.id,
+            $or: [{ status: 1 }, { status: 0 }],
+        });
+        if (check) {
+            res.status(200).json({ success: true, data: check });
+        } else {
+            res.status(400).json({ success: false, data: null });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
-      res.status(200).json({success:true, message:"Your tour is booked!", data:savedBooking})
-   } catch (error) {
-      res.status(500).json({success:false, message:"Internal server error!"})
-   }
-}
+export const cancelBooking = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const count = await Booking.countDocuments({ userInfo: req.user.id, status: 2 });
+        await Booking.findOneAndUpdate(
+            {
+                _id: id,
+                userInfo: req.user.id,
+            },
+            {
+                status: -1,
+            },
+            { new: true },
+        );
+        if (count == 2) {
+            await User.findByIdAndUpdate(
+                req.user.id,
+                {
+                    rank: 0,
+                },
+                { new: true },
+            );
+        }
+        if (count == 4) {
+            await User.findByIdAndUpdate(
+                req.user.id,
+                {
+                    rank: 1,
+                },
+                { new: true },
+            );
+        }
+        if (count == 9) {
+            await User.findByIdAndUpdate(
+                req.user.id,
+                {
+                    rank: 2,
+                },
+                { new: true },
+            );
+        }
+        res.status(200).json({ success: true, message: 'Huỷ tour thành công' });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
 
-// get single booking
-export const getBooking = async(req,res) => {
-   const id = req.params.id
-   
-   try {
-      const book = await Booking.findById(id)
+// get detail booking
+export const getDetailBooking = async (req, res) => {
+    const id = req.params.id;
 
-      res.status(200).json({success:true, message:"Successful!", data:book})
-   } catch (error) {
-      res.status(404).json({success:false, message:"Not Found!"})
-   }
-} 
+    try {
+        const book = await Booking.findById(id);
 
+        res.status(200).json({ success: true, data: book });
+    } catch (error) {
+        res.status(404).json({ success: false, message: error.message });
+    }
+};
 
 // get all booking
-export const getAllBooking = async(req,res) => {
-   
-   try {
-      const books = await Booking.find()
+export const getAllBooking = async (req, res) => {
+    try {
+        if (req.user.role == 'user') {
+            const books = await Booking.find({ userInfo: req.user.id }).populate('userInfo').populate('tourInfo');
 
-      res.status(200).json({success:true, message:"Successful!", data:books})
-   } catch (error) {
-      res.status(500).json({success:false, message:"Internal server error!"})
-   }
-} 
+            res.status(200).json({ success: true, data: books });
+        } else {
+            const books = await Booking.find().populate('userInfo').populate('tourInfo');
+            res.status(200).json({ success: true, data: books });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
