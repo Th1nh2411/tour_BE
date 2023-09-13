@@ -1,11 +1,11 @@
 import express from 'express';
 const router = express.Router();
 import querystring from 'qs';
-import config from '../config/default.json' assert { type: 'json' };
+import { config } from '../config/vnpayConfig.js';
 import crypto from 'crypto';
 import Booking from '../models/Booking.js';
 import Payment from '../models/Payment.js';
-import moment from 'moment/moment';
+import moment from 'moment';
 
 router.post('/create_payment_url', async function (req, res, next) {
     let id_order = req.body.id_order;
