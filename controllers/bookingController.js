@@ -193,8 +193,8 @@ export const createBooking = async (req, res) => {
 
 export const checkBooking = async (req, res) => {
     try {
-        const check = await Booking.findOne({
-            id_user: req.user.id,
+        const check = await Booking.find({
+            userInfo: req.user.id,
             $or: [{ status: 1 }, { status: 0 }],
         });
         if (check) {
