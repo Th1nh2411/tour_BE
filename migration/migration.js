@@ -227,7 +227,7 @@ async function seed() {
                 price: '5000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -248,7 +248,7 @@ async function seed() {
                 price: '12000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -264,7 +264,7 @@ async function seed() {
                 price: '15000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -281,7 +281,7 @@ async function seed() {
                 price: '8000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -301,7 +301,7 @@ async function seed() {
                 price: '7000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -321,7 +321,7 @@ async function seed() {
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -341,7 +341,7 @@ async function seed() {
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -361,7 +361,7 @@ async function seed() {
                 price: '8000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -381,7 +381,7 @@ async function seed() {
                 price: '14000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -401,7 +401,7 @@ async function seed() {
                 price: '20000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -421,7 +421,7 @@ async function seed() {
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -441,7 +441,7 @@ async function seed() {
                 price: '12000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -457,7 +457,7 @@ async function seed() {
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -477,7 +477,7 @@ async function seed() {
                 price: '11000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -497,7 +497,7 @@ async function seed() {
                 price: '13000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -517,7 +517,7 @@ async function seed() {
                 price: '9000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -537,7 +537,7 @@ async function seed() {
                 price: '15000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -557,7 +557,7 @@ async function seed() {
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -577,7 +577,7 @@ async function seed() {
                 price: '10000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -597,7 +597,7 @@ async function seed() {
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -617,7 +617,7 @@ async function seed() {
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -637,7 +637,7 @@ async function seed() {
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -657,7 +657,7 @@ async function seed() {
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
             {
@@ -677,7 +677,7 @@ async function seed() {
                 price: '30000000',
                 availableSeats: 10,
                 maxSeats: 10,
-                startDate: '2023-07-01',
+                startDate: '2023-10-30',
                 endDate: '2023-12-30',
             },
         ];

@@ -274,3 +274,20 @@ export const getAllBooking = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
+async function checkAndDeleteExpiredBooking() {
+    const now = new Date();
+    now.setHours(now.getHours() + 7);
+    const bookingList = await Booking.find({
+        status: 0,
+    });
+    if (bookingList) {
+        for (let i = 0; i < bookingList.length; i++) {
+            if (bookingList.expiredAt <= now) {
+                await Booking.findOneAndDelete(bookingList[i]._id);
+            }
+        }
+    }
+}
+
+setInterval(checkAndDeleteExpiredBooking, 60000);
