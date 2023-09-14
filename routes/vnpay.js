@@ -47,7 +47,7 @@ router.post('/create_payment_url', async function (req, res, next) {
                 vnp_Params['vnp_TmnCode'] = tmnCode;
                 vnp_Params['vnp_Locale'] = locale;
                 vnp_Params['vnp_CurrCode'] = currCode;
-                vnp_Params['vnp_TxnRef'] = id_order;
+                vnp_Params['vnp_TxnRef'] = id_order.toString() + flag.toString();
                 vnp_Params['vnp_OrderInfo'] = 'Thanh toán cho mã đơn hàng:' + id_order;
                 vnp_Params['vnp_OrderType'] = 'other';
                 if (booking.status == 0 && flag == 1) {
@@ -87,7 +87,7 @@ router.get('/vnpay_return', async function (req, res, next) {
         delete vnp_Params['vnp_SecureHash'];
         delete vnp_Params['vnp_SecureHashType'];
 
-        let id_order = vnp_Params.vnp_TxnRef;
+        let id_order = vnp_Params.vnp_TxnRef.slice(0, -1);
         let amount = vnp_Params.vnp_Amount;
 
         let secretKey = vnpayConfig.vnp_HashSecret;
