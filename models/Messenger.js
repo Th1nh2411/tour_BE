@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 
 const messengerSchema = new mongoose.Schema(
     {
-        user_id1: {
+        id_user1: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
         },
-        user_id2: {
+        id_user2: {
             type: mongoose.Types.ObjectId,
             ref: 'User',
         },
-        message: Array,
+        content: Array,
     },
     { timestamps: false },
 );

@@ -996,7 +996,7 @@ export const getDetailUser = async (req, res) => {
 
         res.status(200).json({ success: true, data: user });
     } catch (error) {
-        res.status(404).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
@@ -1006,6 +1006,16 @@ export const getAllUser = async (req, res) => {
 
         res.status(200).json({ success: true, data: users });
     } catch (error) {
-        res.status(404).json({ success: false, message: error.message });
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const getAllStaff = async (req, res) => {
+    try {
+        const users = await User.find({ role: 'admin' }).select('_id');
+
+        res.status(200).json({ success: true, data: users });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
     }
 };

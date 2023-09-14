@@ -90,7 +90,7 @@ router.get('/vnpay_return', async function (req, res, next) {
         let id_order = vnp_Params.vnp_TxnRef;
         let amount = vnp_Params.vnp_Amount;
 
-        let secretKey = config.vnp_HashSecret;
+        let secretKey = vnpayConfig.vnp_HashSecret;
 
         let signData = querystring.stringify(vnp_Params, { encode: false });
         let hmac = crypto.createHmac('sha512', secretKey);
@@ -160,9 +160,9 @@ router.post('/refund', function (req, res, next) {
     process.env.TZ = 'Asia/Ho_Chi_Minh';
     let date = new Date();
 
-    let vnp_TmnCode = config.vnp_TmnCode;
-    let secretKey = config.vnp_HashSecret;
-    let vnp_Api = config.vnp_Api;
+    let vnp_TmnCode = vnpayConfig.vnp_TmnCode;
+    let secretKey = vnpayConfig.vnp_HashSecret;
+    let vnp_Api = vnpayConfig.vnp_Api;
 
     let vnp_TxnRef = req.body.id_order;
     let vnp_TransactionDate = req.body.transDate;
