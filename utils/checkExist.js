@@ -110,6 +110,22 @@ export const checkExistBooking = async (req, res, next) => {
     }
 };
 
+export const checkUnPaidBooking = async (req, res, next) => {
+    try {
+        const check = await Booking.findOne({
+            userInfo: req.user.id,
+            $or: [{ status: 1 }, { status: 0 }],
+        });
+        if (!check) {
+            next();
+        } else {
+            res.status(400).json({ success: false, message: 'Đang có đơn chưa thanh toán, không thể đặt thêm' });
+        }
+    } catch (error) {
+        res.status(501).json({ success: false, message: 'Middlewares Error' });
+    }
+};
+
 export const checkExistCategory = async (req, res, next) => {
     try {
         const id = req.params.id;
