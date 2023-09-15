@@ -8,10 +8,10 @@ import {
 } from '../controllers/bookingController.js';
 import { verifyUser, verifyToken } from '../utils/authenticate.js';
 import { checkActiveAccount, checkDateBooking } from '../utils/checkCreate.js';
-import { checkExistBooking } from '../utils/checkExist.js';
+import { checkExistBooking, checkUnPaidBooking } from '../utils/checkExist.js';
 const router = express.Router();
 
-router.post('/', verifyToken, verifyUser, checkActiveAccount, checkDateBooking, createBooking);
+router.post('/', verifyToken, verifyUser, checkActiveAccount, checkDateBooking, checkUnPaidBooking, createBooking);
 router.get('/:id', verifyToken, checkExistBooking, getDetailBooking);
 router.get('/check/payment', verifyToken, checkBooking);
 router.get('/', verifyToken, getAllBooking);

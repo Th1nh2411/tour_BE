@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 const date = new Date();
 date.setHours(date.getHours() + 7);
+const expiredAt = new Date();
+expiredAt.setHours(date.getHours() + 31);
 
 const bookingSchema = new mongoose.Schema(
     {
@@ -34,6 +36,11 @@ const bookingSchema = new mongoose.Schema(
             type: Date,
             required: true,
             default: date,
+        },
+        expiredAt: {
+            type: Date,
+            required: true,
+            default: expiredAt,
         },
         status: {
             type: Number,

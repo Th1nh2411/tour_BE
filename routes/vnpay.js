@@ -88,7 +88,7 @@ router.get('/vnpay_return', async function (req, res, next) {
         delete vnp_Params['vnp_SecureHashType'];
 
         let id_order = vnp_Params.vnp_TxnRef.slice(0, -1);
-        let amount = vnp_Params.vnp_Amount;
+        let amount = vnp_Params.vnp_Amount / 100;
 
         let secretKey = vnpayConfig.vnp_HashSecret;
 
