@@ -37,8 +37,16 @@ export const updateTour = async (req, res) => {
 export const getDetailTour = async (req, res) => {
     const id = req.params.id;
     try {
-        const tour = await Tour.findById(id).populate('guide').populate('category');
-
+        const tour = await Tour.findById(id).lean().populate('guide').populate('category');
+        const result = await Review.aggregate([
+            { $match: { tourInfo: tour._id } }, // Lọc theo id tour
+            { $group: { _id: '$tourId', averageRating: { $avg: '$rating' } } }, // Tính rating trung bình
+        ]);
+        if (result.length > 0) {
+            tour.averageRating = Math.round(result[0].averageRating);
+        } else {
+            tour.averageRating = 0; // Nếu không có đánh giá, mặc định là 0
+        }
         res.status(200).json({ success: true, data: tour });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
