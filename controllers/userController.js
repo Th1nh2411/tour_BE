@@ -471,7 +471,7 @@ export const changePassword = async (req, res) => {
 };
 
 export const accessForgotPassword = async (req, res) => {
-    const { newPassword, repeatPassword, email, username } = req.body;
+    const { newPassword, repeatPassword, username } = req.body;
     try {
         if (newPassword == repeatPassword) {
             const salt = bcrypt.genSaltSync(10);
@@ -479,7 +479,6 @@ export const accessForgotPassword = async (req, res) => {
             await User.findOneAndUpdate(
                 {
                     username,
-                    email,
                 },
                 {
                     $set: { password: hashPassword },
@@ -502,11 +501,10 @@ export const accessForgotPassword = async (req, res) => {
 };
 
 export const verify = async (req, res) => {
-    const { username, email, verifyID } = req.body;
+    const { username, verifyID } = req.body;
     try {
         const user = await User.findOne({
             username,
-            email,
             verifyID,
         });
         if (user) {
@@ -1359,7 +1357,7 @@ export const activeButton = async (req, res) => {
         });
         res.status(200).json({
             success: true,
-            message: 'Mã kịch hoạt đã được gửi, vui lòng kiểm tra email đăng ký',
+            message: 'Mã kích hoạt đã được gửi, vui lòng kiểm tra email đăng ký',
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
