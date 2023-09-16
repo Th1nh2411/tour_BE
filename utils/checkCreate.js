@@ -18,6 +18,23 @@ export const checkActiveAccount = async (req, res, next) => {
     }
 };
 
+export const checkUnActiveAccount = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.user.id);
+
+        if (!user.isActive) {
+            next();
+        } else {
+            res.status(400).json({
+                success: false,
+                message: 'Tài khoản của bạn đã kích hoạt rồi',
+            });
+        }
+    } catch (error) {
+        res.status(501).json({ success: false, message: 'Middlewares Error' });
+    }
+};
+
 export const checkDateBooking = async (req, res, next) => {
     try {
         const tour = await Tour.findById(req.body.tourInfo);

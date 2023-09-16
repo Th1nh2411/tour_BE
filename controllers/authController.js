@@ -416,7 +416,7 @@ export const login = async (req, res) => {
             const checkCorrectPassword = await bcrypt.compare(req.body.password, user.password);
             // if password incorrect
             if (!checkCorrectPassword) {
-                return res.status(401).json({ success: false, message: 'Sai mật khẩu' });
+                return res.status(404).json({ success: false, message: 'Sai mật khẩu' });
             } else {
                 const { password, ...rest } = user._doc;
                 // create jwt token
