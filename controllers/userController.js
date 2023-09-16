@@ -50,7 +50,7 @@ export const updateUser = async (req, res) => {
             });
             await transporter.sendMail({
                 from: 'HOLIDATE SECURITY', // sender address
-                to: `${email}`, // list of receivers
+                to: `${req.body.email}`, // list of receivers
                 subject: 'HOLIDATE SECURITY', // Subject line
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: `<!DOCTYPE html>
