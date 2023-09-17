@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
+import * as clientConfig from '../config/clientConfig.js';
 import { LocalStorage } from 'node-localstorage';
 const localStorage = new LocalStorage('./scratch');
 
@@ -65,7 +66,7 @@ export const updateUser = async (req, res) => {
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
+                    <a href='${clientConfig.url}?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
             });
             res.status(200).json({
@@ -109,7 +110,7 @@ export const active = async (req, res) => {
             }
         } else {
             const storeUserUpdate = JSON.parse(localStorage.getItem('userUpdate'));
-            const id = req.query.id_user;
+            const id = req.body.id_user;
             if (storeUserUpdate) {
                 if (storeUserUpdate[0].email != email || storeUserUpdate[0].email != activeID) {
                     await User.findByIdAndUpdate(
