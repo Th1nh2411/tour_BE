@@ -72,7 +72,7 @@ export const updateUser = async (req, res) => {
             res.status(200).json({
                 success: true,
                 message:
-                    'Cập nhật thông tin thành công. Bạn vừa cập nhật địa chỉ email, vui lòng kiểm tra hòm thư để kích hoạt tài khoản',
+                    'Cập nhật thông tin thành công. Vui lòng kiểm tra hòm thư để xác thực  và cập nhật tài khoản email!',
             });
         }
     } catch (error) {
@@ -123,7 +123,7 @@ export const active = async (req, res) => {
                     localStorage.removeItem('userUpdate');
                     res.status(200).json({
                         success: true,
-                        message: `Xác minh tài khoản email thành công`,
+                        message: `Xác minh tài khoản email thành công! Đóng tab cũ để sử dụng thông tin đã được cập nhật.`,
                     });
                 } else {
                     res.status(400).json({
