@@ -2,6 +2,7 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
+import * as clientConfig from '../config/clientConfig.js';
 import { LocalStorage } from 'node-localstorage';
 const localStorage = new LocalStorage('./scratch');
 
@@ -65,13 +66,13 @@ export const updateUser = async (req, res) => {
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
+                    <a href='${clientConfig.url}?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
             });
             res.status(200).json({
                 success: true,
                 message:
-                    'Cập nhật thông tin thành công. Bạn vừa cập nhật địa chỉ email, vui lòng kiểm tra hòm thư để kích hoạt tài khoản',
+                    'Cập nhật thông tin thành công. Vui lòng kiểm tra hòm thư để xác thực  và cập nhật tài khoản email!',
             });
         }
     } catch (error) {
@@ -99,17 +100,17 @@ export const active = async (req, res) => {
                 localStorage.removeItem('user');
                 res.status(200).json({
                     success: true,
-                    message: `Kích hoạt tài khoản thành công`,
+                    message: `Đăng ký tài khoản thành công`,
                 });
             } else {
                 res.status(400).json({
                     success: false,
-                    message: `Lỗi kích hoạt tài khoản`,
+                    message: `Lỗi đăng ký tài khoản`,
                 });
             }
         } else {
             const storeUserUpdate = JSON.parse(localStorage.getItem('userUpdate'));
-            const id = req.query.id_user;
+            const id = req.body.id_user;
             if (storeUserUpdate) {
                 if (storeUserUpdate[0].email != email || storeUserUpdate[0].email != activeID) {
                     await User.findByIdAndUpdate(
@@ -122,18 +123,18 @@ export const active = async (req, res) => {
                     localStorage.removeItem('userUpdate');
                     res.status(200).json({
                         success: true,
-                        message: `Kích hoạt tài khoản thành công`,
+                        message: `Xác minh tài khoản email thành công! Đóng tab cũ để sử dụng thông tin đã được cập nhật.`,
                     });
                 } else {
                     res.status(400).json({
                         success: false,
-                        message: `Lỗi kích hoạt tài khoản`,
+                        message: `Lỗi xác minh tài khoản`,
                     });
                 }
             } else {
                 res.status(400).json({
                     success: false,
-                    message: `Lỗi kích hoạt tài khoản`,
+                    message: `Lỗi xác minh tài khoản`,
                 });
             }
         }

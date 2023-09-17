@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
+import * as clientConfig from '../config/clientConfig.js';
 import { LocalStorage } from 'node-localstorage';
 const localStorage = new LocalStorage('./scratch');
 
@@ -40,12 +41,12 @@ export const register = async (req, res) => {
             text: 'HOLIDATE SECURITY', // plain text body
             html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?email=${req.body.email}&activeID=${randomID}'>Click here</a>
+                    <a href='${clientConfig.url}/login?email=${req.body.email}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
         });
         res.status(200).json({
             success: true,
-            message: 'Tạo tài khoản thành công, vui lòng kiểm tra email để kích hoạt',
+            message: 'Đã ghi nhận thông tin. Vui lòng kiểm tra email để xác minh và đăng ký tài khoản!',
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
