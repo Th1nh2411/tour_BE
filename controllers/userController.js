@@ -56,7 +56,7 @@ export const updateUser = async (req, res) => {
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?id_user=${user._id}&activeID=${randomID}'>Click here</a>
+                    <a href='http://localhost:3003/profile?id_user=${req.user.id}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
             });
             res.status(200).json({

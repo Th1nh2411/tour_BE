@@ -22,7 +22,7 @@ const router = express.Router();
 
 //Update user
 router.put('/profile', checkExistPhoneNumber, verifyToken, updateUser);
-router.get('/active', active);
+router.post('/active', active);
 router.get('/activebutton', verifyToken, checkUnActiveAccount, activeButton);
 router.put('/changepassword', verifyToken, changePassword);
 router.post('/forgotpassword', forgotPassword);
