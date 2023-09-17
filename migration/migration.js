@@ -37,7 +37,6 @@ async function seed() {
                 photo: 'https://khoinguonsangtao.vn/wp-content/uploads/2022/11/hinh-anh-avatar-nam-ca-tinh-nguoi-that.jpg',
                 phoneNumber: '0961592551',
                 address: 'Quang Trung, Thống Nhất, Đồng Nai',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f88',
@@ -48,7 +47,6 @@ async function seed() {
                 fullName: 'Nguyễn Đức Thịnh',
                 phoneNumber: '0966666566',
                 address: 'Kontum',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f91',
@@ -59,7 +57,6 @@ async function seed() {
                 fullName: 'Đỗ Đức Hậu',
                 phoneNumber: '0966664566',
                 address: 'Kontum',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f92',
@@ -70,7 +67,6 @@ async function seed() {
                 photo: 'https://anhdep123.com/wp-content/uploads/2021/01/trai-dep-ngau.jpg',
                 phoneNumber: '0966266566',
                 address: 'Hải Dương',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f93',
@@ -81,7 +77,6 @@ async function seed() {
                 photo: 'https://luv.vn/wp-content/uploads/2021/11/avatar-gai-xinh-73.jpg',
                 phoneNumber: '0966266566',
                 address: 'Hải Dương',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f94',
@@ -92,7 +87,6 @@ async function seed() {
                 photo: 'https://meliawedding.com.vn/wp-content/uploads/2022/03/avatar-gai-xinh-49.jpg',
                 phoneNumber: '0964566566',
                 address: 'Đồng Nai',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f95',
@@ -103,7 +97,6 @@ async function seed() {
                 photo: 'https://pgddakglong.edu.vn/wp-content/uploads/2023/04/anh-gai-xinh-lam-anh-dai-dien-facebook1-1.jpg',
                 phoneNumber: '0967566566',
                 address: 'Đồng Nai',
-                isActive: true,
             },
             {
                 _id: '6153f2e39c6c9bdf49ec1f89',
@@ -114,7 +107,6 @@ async function seed() {
                 phoneNumber: '096666666',
                 address: 'Kontum',
                 role: 'admin',
-                isActive: true,
             },
         ];
         await User.insertMany(userData);

@@ -2,6 +2,8 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
+import { LocalStorage } from 'node-localstorage';
+const localStorage = new LocalStorage('./scratch');
 
 //Create new User
 export const createUser = async (req, res) => {
@@ -30,16 +32,23 @@ export const updateUser = async (req, res) => {
             );
             res.status(200).json({ success: true, message: 'Cập nhật thành công' });
         } else {
-            const randomID = Math.floor(100000 + Math.random() * 999999);
-            await User.findByIdAndUpdate(
+            const randomID = Math.floor(100000 + Math.random() * 900000);
+            const userUpdated = await User.findByIdAndUpdate(
                 id,
                 {
-                    $set: req.body,
-                    activeID: randomID,
-                    isActive: 0,
+                    fullName: req.body.fullName,
+                    phoneNumbber: req.body.phoneNumbber,
+                    address: req.body.address,
                 },
                 { new: true },
             );
+            const user = [
+                {
+                    email: userUpdated.email,
+                    activeID: randomID,
+                },
+            ];
+            localStorage.setItem('userUpdate', JSON.stringify(user));
             let transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
@@ -56,7 +65,7 @@ export const updateUser = async (req, res) => {
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?id_user=${req.user.id}&activeID=${randomID}'>Click here</a>
+                    <a href='http://localhost:3003/profile?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
             });
             res.status(200).json({
@@ -64,6 +73,69 @@ export const updateUser = async (req, res) => {
                 message:
                     'Cập nhật thông tin thành công. Bạn vừa cập nhật địa chỉ email, vui lòng kiểm tra hòm thư để kích hoạt tài khoản',
             });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const active = async (req, res) => {
+    const { activeID, email } = req.body;
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    try {
+        if (storedUser) {
+            if (storedUser[0].email != email || storedUser[0].email != activeID) {
+                const newUser = new User({
+                    username: storedUser[0].username,
+                    email: storedUser[0].email,
+                    password: storedUser[0].password,
+                    photo: storedUser[0].photo,
+                    address: storedUser[0].address,
+                    fullName: storedUser[0].fullName,
+                    phoneNumber: storedUser[0].phoneNumber,
+                    activeID: storedUser[0].activeID,
+                });
+                await newUser.save();
+                localStorage.removeItem('user');
+                res.status(200).json({
+                    success: true,
+                    message: `Kích hoạt tài khoản thành công`,
+                });
+            } else {
+                res.status(400).json({
+                    success: false,
+                    message: `Lỗi kích hoạt tài khoản`,
+                });
+            }
+        } else {
+            const storeUserUpdate = JSON.parse(localStorage.getItem('userUpdate'));
+            const id = req.query.id_user;
+            if (storeUserUpdate) {
+                if (storeUserUpdate[0].email != email || storeUserUpdate[0].email != activeID) {
+                    await User.findByIdAndUpdate(
+                        id,
+                        {
+                            email: req.body.email,
+                        },
+                        { new: true },
+                    );
+                    localStorage.removeItem('userUpdate');
+                    res.status(200).json({
+                        success: true,
+                        message: `Kích hoạt tài khoản thành công`,
+                    });
+                } else {
+                    res.status(400).json({
+                        success: false,
+                        message: `Lỗi kích hoạt tài khoản`,
+                    });
+                }
+            } else {
+                res.status(400).json({
+                    success: false,
+                    message: `Lỗi kích hoạt tài khoản`,
+                });
+            }
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -212,83 +284,6 @@ export const forgotPassword = async (req, res) => {
                 message: `Thông tin không chính xác`,
             });
         }
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-export const active = async (req, res) => {
-    const { activeID, userID } = req.body;
-    try {
-        const user = await User.findOne({
-            _id: userID,
-            activeID,
-        });
-        if (user) {
-            await User.findOneAndUpdate(
-                {
-                    _id: userID,
-                },
-                {
-                    $set: { activeID: 0, isActive: true },
-                },
-                { new: true },
-            );
-            await User.deleteMany({ email: `${user.email}`, isActive: false })
-                .then((result) => {
-                    console.log(`${result.deletedCount} người dùng đã được xoá.`);
-                })
-                .catch((error) => {
-                    console.error('Lỗi khi xoá người dùng:', error);
-                });
-            res.status(200).json({
-                success: true,
-                message: `Email của bạn đã được xác minh thành công`,
-            });
-        } else {
-            res.status(400).json({
-                success: false,
-                message: `Mã kích hoạt không chính xác`,
-            });
-        }
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
-
-export const activeButton = async (req, res) => {
-    try {
-        const randomID = Math.floor(100000 + Math.random() * 999999);
-        const user = await User.findByIdAndUpdate(
-            req.user.id,
-            {
-                activeID: randomID,
-            },
-            { new: true },
-        );
-        let transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: 'n19dccn107@student.ptithcm.edu.vn', // generated ethereal user
-                pass: 'dzwedtbaoqsmrkob', // generated ethereal password
-            },
-        });
-        await transporter.sendMail({
-            from: 'HOLIDATE SECURITY', // sender address
-            to: `${user.email}`, // list of receivers
-            subject: 'HOLIDATE SECURITY', // Subject line
-            text: 'HOLIDATE SECURITY', // plain text body
-            html: mailConfig.html(`
-            <h2>Activation URL<br>
-                <a href='http://localhost:3003/profile?id_user=${user._id}&activeID=${randomID}'>Click here</a>
-            </h2>`), // htm, // html body
-        });
-        res.status(200).json({
-            success: true,
-            message: 'Mã kích hoạt đã được gửi, vui lòng kiểm tra email đăng ký',
-        });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

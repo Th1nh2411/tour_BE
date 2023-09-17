@@ -2,26 +2,28 @@ import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
+import * as mailConfig from '../config/mailConfig.js';
+import { LocalStorage } from 'node-localstorage';
+const localStorage = new LocalStorage('./scratch');
 
-// user register
 export const register = async (req, res) => {
     try {
-        //hashing password
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
-        const randomID = Math.floor(100000 + Math.random() * 999999);
-
-        const newUser = new User({
-            username: req.body.username,
-            email: req.body.email,
-            password: hash,
-            photo: req.body.photo,
-            address: req.body.address,
-            fullName: req.body.fullName,
-            phoneNumber: req.body.phoneNumber,
-            activeID: randomID,
-        });
-        await newUser.save();
+        const randomID = Math.floor(100000 + Math.random() * 900000);
+        const user = [
+            {
+                username: req.body.username,
+                email: req.body.email,
+                password: hash,
+                photo: req.body.photo,
+                address: req.body.address,
+                fullName: req.body.fullName,
+                phoneNumber: req.body.phoneNumber,
+                activeID: randomID,
+            },
+        ];
+        localStorage.setItem('user', JSON.stringify(user));
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
@@ -33,12 +35,12 @@ export const register = async (req, res) => {
         });
         await transporter.sendMail({
             from: 'HOLIDATE SECURITY', // sender address
-            to: `${email}`, // list of receivers
+            to: `${req.body.email}`, // list of receivers
             subject: 'HOLIDATE SECURITY', // Subject line
             text: 'HOLIDATE SECURITY', // plain text body
             html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='http://localhost:3003/profile?id_user=${newUser._id}&activeID=${randomID}'>Click here</a>
+                    <a href='http://localhost:3003/profile?email=${req.body.email}&activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
         });
         res.status(200).json({

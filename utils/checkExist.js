@@ -23,8 +23,8 @@ export const checkExistPhoneNumber = async (req, res, next) => {
     try {
         const phoneNumber = req.body.phoneNumber;
 
-        const checkUser = await User.findOne({ phoneNumber, isActive: true });
-        const checkGuide = await Guide.findOne({ phoneNumber, isActive: true });
+        const checkUser = await User.findOne({ phoneNumber });
+        const checkGuide = await Guide.findOne({ phoneNumber });
         if (!checkUser && !checkGuide) {
             next();
         } else {
@@ -39,8 +39,8 @@ export const checkExistEmail = async (req, res, next) => {
     try {
         const email = req.body.email;
 
-        const checkUser = await User.findOne({ email, isActive: true });
-        const checkGuide = await Guide.findOne({ email, isActive: true });
+        const checkUser = await User.findOne({ email });
+        const checkGuide = await Guide.findOne({ email });
         if (!checkUser && !checkGuide) {
             next();
         } else {

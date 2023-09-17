@@ -11,7 +11,7 @@ export const getAllFeedback = async (req, res) => {
 };
 
 export const createFeedback = async (req, res) => {
-    const newFeedback = new Category({
+    const newFeedback = new Feedback({
         userInfo: req.user.id,
         message: req.body.message,
     });
