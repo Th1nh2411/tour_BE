@@ -225,7 +225,7 @@ export const active = async (req, res) => {
             activeID,
         });
         if (user) {
-            await User.findOneAndDelete(
+            await User.findOneAndUpdate(
                 {
                     _id: userID,
                 },
