@@ -100,12 +100,12 @@ export const active = async (req, res) => {
                 localStorage.removeItem('user');
                 res.status(200).json({
                     success: true,
-                    message: `Kích hoạt tài khoản thành công`,
+                    message: `Đăng ký tài khoản thành công`,
                 });
             } else {
                 res.status(400).json({
                     success: false,
-                    message: `Lỗi kích hoạt tài khoản`,
+                    message: `Lỗi đăng ký tài khoản`,
                 });
             }
         } else {
@@ -123,18 +123,18 @@ export const active = async (req, res) => {
                     localStorage.removeItem('userUpdate');
                     res.status(200).json({
                         success: true,
-                        message: `Kích hoạt tài khoản thành công`,
+                        message: `Xác minh tài khoản email thành công`,
                     });
                 } else {
                     res.status(400).json({
                         success: false,
-                        message: `Lỗi kích hoạt tài khoản`,
+                        message: `Lỗi xác minh tài khoản`,
                     });
                 }
             } else {
                 res.status(400).json({
                     success: false,
-                    message: `Lỗi kích hoạt tài khoản`,
+                    message: `Lỗi xác minh tài khoản`,
                 });
             }
         }
