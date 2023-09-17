@@ -34,14 +34,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: '0',
         },
-        activeID: {
-            type: String,
-            default: '0',
-        },
-        isActive: {
-            type: Boolean,
-            default: false,
-        },
         photo: {
             type: String,
             default: 'http://res.cloudinary.com/dpgjnngzt/image/upload/v1692954334/anhdaidien_onsafn.jpg',
