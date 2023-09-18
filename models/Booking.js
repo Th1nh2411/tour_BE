@@ -17,8 +17,6 @@ const bookingSchema = new mongoose.Schema(
         guestSize: {
             type: Number,
             required: true,
-            min: 1,
-            max: 50,
         },
         startDate: {
             type: Date,
