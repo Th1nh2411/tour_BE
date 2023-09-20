@@ -5,6 +5,7 @@ import vnpayConfig from '../config/vnpayConfig.js';
 import crypto from 'crypto';
 import Booking from '../models/Booking.js';
 import Payment from '../models/Payment.js';
+import Tour from '../models/Tour.js';
 import moment from 'moment';
 
 router.post('/create_payment_url', async function (req, res, next) {
@@ -112,6 +113,15 @@ router.get('/vnpay_return', async function (req, res, next) {
                 amount: 0.2 * booking.total,
                 description: `Thanh toán cọc cho đơn đặt mã số: ${booking._id}`,
             });
+            await Tour.findOneAndUpdate(
+                {
+                    _id: booking.tourInfo,
+                },
+                {
+                    $inc: { availableSeats: -booking.guestSize },
+                },
+                { new: true },
+            );
             await newPayment.save();
             res.status(200).json({ success: true, message: 'Thanh toán tiền cọc thành công.' });
         } else if (booking.status == 0 && amount == booking.total) {
@@ -130,6 +140,15 @@ router.get('/vnpay_return', async function (req, res, next) {
                 amount: booking.total,
                 description: `Thanh toán toàn bộ cho đơn đặt mã số: ${booking._id}!`,
             });
+            await Tour.findOneAndUpdate(
+                {
+                    _id: booking.tourInfo,
+                },
+                {
+                    $inc: { availableSeats: -booking.guestSize },
+                },
+                { new: true },
+            );
             await newPayment.save();
             res.status(200).json({ success: true, message: 'Thanh toán thành công.' });
         } else {

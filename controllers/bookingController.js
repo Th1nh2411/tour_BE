@@ -202,17 +202,27 @@ export const checkBooking = async (req, res) => {
 export const cancelBooking = async (req, res) => {
     const id = req.params.id;
     try {
-        const count = await Booking.countDocuments({ userInfo: req.user.id, status: 2 });
-        await Booking.findOneAndUpdate(
+        const booking = await Booking.findOneAndUpdate(
             {
                 _id: id,
-                userInfo: req.user.id,
             },
             {
-                status: -1,
+                $set: { status: -1 },
             },
             { new: true },
         );
+        if (booking.status != 0) {
+            await Tour.findOneAndUpdate(
+                {
+                    _id: booking.tourInfo,
+                },
+                {
+                    $inc: { availableSeats: +booking.guestSize },
+                },
+                { new: true },
+            );
+        }
+        const count = await Booking.countDocuments({ userInfo: req.user.id, status: 2 });
         if (count == 2) {
             await User.findByIdAndUpdate(
                 req.user.id,
