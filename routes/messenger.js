@@ -1,16 +1,16 @@
 import express from 'express';
 import {
-    getAllMessage,
+    countMessageUnRead,
     getSupportMessage,
-    sendMessage,
     sendSupportMessage,
+    transAllMessageToReaded,
 } from '../controllers/messengerController.js';
 import { verifyToken } from '../utils/authenticate.js';
 
 const router = express.Router();
-router.get('/', verifyToken, getAllMessage);
-router.post('/', verifyToken, sendMessage);
-router.get('/support', verifyToken, getSupportMessage);
-router.post('/support', verifyToken, sendSupportMessage);
+router.post('/support/get', verifyToken, getSupportMessage);
+router.post('/support/send', verifyToken, sendSupportMessage);
+router.post('/support/read', verifyToken, transAllMessageToReaded);
+router.post('/support/count', verifyToken, countMessageUnRead);
 
 export default router;
