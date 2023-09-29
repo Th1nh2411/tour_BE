@@ -54,12 +54,15 @@ export const sendSupportMessage = async (req, res) => {
     const data = {
         message: req.body.message,
         sendTime: date,
+        sender: id_user1,
     };
 
-    const messenger = await Messenger.findOne({ id_user1, id_user2 });
-    messenger.content.push(data);
-
     try {
+        let messenger = await Messenger.findOne({ id_user1, id_user2 });
+        if (!messenger) {
+            messenger = new Messenger({ id_user1, id_user2, content: [] });
+        }
+        messenger.content.push(data);
         messenger.save();
         res.status(200).json({ success: true, message: 'Gửi tin nhắn thành công' });
     } catch (error) {

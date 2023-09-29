@@ -11,7 +11,12 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:3003',
+    },
+});
+const port = process.env.PORT || 8000;
 
 io.on('connection', (socket) => {
     console.log('New user connected');
@@ -25,8 +30,6 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 });
-
-const port = process.env.PORT || 8000;
 const corsOptions = {
     origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
     credentials: true,
@@ -39,6 +42,6 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use('/api/v1', rootRouter);
-app.listen(port, async () => {
+server.listen(port, async () => {
     console.log(`server listening http://localhost:${port}/`);
 });
