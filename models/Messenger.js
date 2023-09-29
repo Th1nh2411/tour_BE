@@ -10,7 +10,7 @@ const messengerSchema = new mongoose.Schema(
             type: mongoose.Types.ObjectId,
             ref: 'User',
         },
-        content: Array,
+        content: { type: Array, default: [] },
     },
     { timestamps: false },
 );

@@ -48,7 +48,7 @@ export const getSupportMessage = async (req, res) => {
 export const sendSupportMessage = async (req, res) => {
     const id_user1 = req.user.id;
     const supporter = await User.findOne({ role: 'admin' });
-    const id_user2 = supporter._id;
+    const id_user2 = supporter.id;
     const date = new Date();
     date.setHours(date.getHours() + 7);
     const data = {
@@ -56,8 +56,7 @@ export const sendSupportMessage = async (req, res) => {
         sendTime: date,
     };
 
-    const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
-
+    const messenger = await Messenger.findOne({ id_user1, id_user2 });
     messenger.content.push(data);
 
     try {
