@@ -8,7 +8,7 @@ import {
 import { verifyToken } from '../utils/authenticate.js';
 
 const router = express.Router();
-router.post('/support/get', verifyToken, getSupportMessage);
+router.get('/support/get', verifyToken, getSupportMessage);
 router.post('/support/send', verifyToken, sendSupportMessage);
 router.post('/support/read', verifyToken, transAllMessageToReaded);
 router.post('/support/count', verifyToken, countMessageUnRead);

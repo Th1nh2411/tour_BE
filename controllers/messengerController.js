@@ -80,18 +80,33 @@ export const countMessageUnRead = async (req, res) => {
 
 export const getSupportMessage = async (req, res) => {
     let id_user1;
+    const currentPage = req.query.currentPage || 1;
     const supporter = await User.findOne({ role: 'admin' });
+    let canLoadMore = true;
     const id_user2 = supporter._id;
     if (req.user.role == 'admin') {
-        id_user1 = req.body.user;
+        id_user1 = req.query.user;
     }
     if (req.user.role == 'user') {
         id_user1 = req.user.id;
     }
     try {
         const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
+        let messages = [];
+        if (messenger.content.length > 10 * currentPage) {
+            // Tin nhắn đủ sẽ tải thêm 10
+            for (let i = 10 * currentPage - 10; i < 10 * currentPage; i++) {
+                messages[i] = messenger.content[i];
+            }
+        } else {
+            // Tin nhắn không đủ chỉ tải tới độ dài mảng content
+            canLoadMore = false;
+            for (let i = 10 * currentPage - 10; i < messenger.content.length; i++) {
+                messages[i] = messenger.content[i];
+            }
+        }
         messenger
-            ? res.status(200).json({ success: true, data: messenger })
+            ? res.status(200).json({ success: true, data: messages, canLoadMore })
             : res.status(400).json({ success: true, data: 'Không có tin nhắn' });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
