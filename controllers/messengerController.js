@@ -18,7 +18,7 @@ export const transAllMessageToReaded = async (req, res) => {
     let id_user1;
     const supporter = await User.findOne({ role: 'admin' });
     const id_user2 = supporter.id;
-    if (req.user.role == 'admin') {
+    if (req.user.role == 'admin' || req.user.role == 'staff') {
         id_user1 = req.body.user;
     }
     if (req.user.role == 'user') {
@@ -57,7 +57,7 @@ export const countMessageUnRead = async (req, res) => {
     let id_user1;
     const supporter = await User.findOne({ role: 'admin' });
     const id_user2 = supporter._id;
-    if (req.user.role == 'admin') {
+    if (req.user.role == 'admin' || req.user.role == 'staff') {
         id_user1 = req.body.user;
     }
     if (req.user.role == 'user') {
@@ -84,14 +84,15 @@ export const getSupportMessage = async (req, res) => {
     const supporter = await User.findOne({ role: 'admin' });
     let canLoadMore = true;
     const id_user2 = supporter._id;
-    if (req.user.role == 'admin') {
-        id_user1 = req.query.user;
+    if (req.user.role == 'admin' || req.user.role == 'staff') {
+        id_user1 = req.query.id_user;
     }
     if (req.user.role == 'user') {
         id_user1 = req.user.id;
     }
     try {
         const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
+        messenger.content.sort((a, b) => b.sendTime - a.sendTime);
         let messages = [];
         if (messenger.content.length > 10 * currentPage) {
             // Tin nhắn đủ sẽ tải thêm 10
@@ -120,7 +121,7 @@ export const sendSupportMessage = async (req, res) => {
     const date = new Date();
     date.setHours(date.getHours() + 7);
     let data = {};
-    if (req.user.role == 'admin') {
+    if (req.user.role == 'admin' || req.user.role == 'staff') {
         id_user1 = req.body.id_user;
         data = {
             message: req.body.message,
