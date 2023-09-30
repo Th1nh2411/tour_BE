@@ -11,10 +11,12 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
+const corsOptions = {
+    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
+    credentials: true,
+};
 const io = new Server(server, {
-    cors: {
-        origin: 'http://localhost:3003',
-    },
+    cors: corsOptions,
 });
 const port = process.env.PORT || 8000;
 
@@ -30,10 +32,7 @@ io.on('connection', (socket) => {
         console.log('User disconnected');
     });
 });
-const corsOptions = {
-    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
-    credentials: true,
-};
+
 //database connection
 
 await db.connect();
