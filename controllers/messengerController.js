@@ -106,7 +106,7 @@ export const getSupportMessage = async (req, res) => {
                 messages[i] = messenger.content[i];
             }
         }
-        messenger
+        messages
             ? res.status(200).json({ success: true, data: messages, canLoadMore, currentPage })
             : res.status(400).json({ success: true, data: 'Không có tin nhắn' });
     } catch (error) {
