@@ -91,23 +91,26 @@ export const getSupportMessage = async (req, res) => {
         id_user1 = req.user.id;
     }
     try {
-        const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
-        if (messenger.content.length) {
-            messenger.content.sort((a, b) => b.sendTime - a.sendTime);
-        }
         let messages = [];
-        if (messenger.content.length > 10 * currentPage) {
-            // Tin nhắn đủ sẽ tải thêm 10
-            for (let i = 10 * currentPage - 10; i < 10 * currentPage; i++) {
-                messages[i] = messenger.content[i];
+        const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
+        if (messenger) {
+            messenger.content.sort((a, b) => b.sendTime - a.sendTime);
+            if (messenger.content.length > 10 * currentPage) {
+                // Tin nhắn đủ sẽ tải thêm 10
+                for (let i = 10 * currentPage - 10; i < 10 * currentPage; i++) {
+                    messages[i] = messenger.content[i];
+                }
+            } else {
+                // Tin nhắn không đủ chỉ tải tới độ dài mảng content
+                canLoadMore = false;
+                for (let i = 10 * currentPage - 10; i < messenger.content.length; i++) {
+                    messages[i] = messenger.content[i];
+                }
             }
         } else {
-            // Tin nhắn không đủ chỉ tải tới độ dài mảng content
             canLoadMore = false;
-            for (let i = 10 * currentPage - 10; i < messenger.content.length; i++) {
-                messages[i] = messenger.content[i];
-            }
         }
+
         messages
             ? res.status(200).json({ success: true, data: messages, canLoadMore, currentPage })
             : res.status(400).json({ success: true, data: 'Không có tin nhắn' });
