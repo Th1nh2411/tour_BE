@@ -92,7 +92,9 @@ export const getSupportMessage = async (req, res) => {
     }
     try {
         const messenger = await Messenger.findOne({ id_user1: id_user1, id_user2: id_user2 });
-        messenger.content.sort((a, b) => b.sendTime - a.sendTime);
+        if (messenger.content.length) {
+            messenger.content.sort((a, b) => b.sendTime - a.sendTime);
+        }
         let messages = [];
         if (messenger.content.length > 10 * currentPage) {
             // Tin nhắn đủ sẽ tải thêm 10
