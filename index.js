@@ -11,14 +11,21 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const io = new Server(server);
+const corsOptions = {
+    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
+    credentials: true,
+};
+const io = new Server(server, {
+    cors: corsOptions,
+});
+const port = process.env.PORT || 8000;
 
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.on('chat:message', (message) => {
+    socket.on('message', (data) => {
         // Xử lý tin nhắn và gửi lại cho tất cả các client
-        io.emit('chat:message', message);
+        io.emit('message_response', data);
     });
 
     socket.on('disconnect', () => {
@@ -26,11 +33,6 @@ io.on('connection', (socket) => {
     });
 });
 
-const port = process.env.PORT || 8000;
-const corsOptions = {
-    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
-    credentials: true,
-};
 //database connection
 
 await db.connect();
@@ -39,6 +41,6 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use('/api/v1', rootRouter);
-app.listen(port, async () => {
+server.listen(port, async () => {
     console.log(`server listening http://localhost:${port}/`);
 });

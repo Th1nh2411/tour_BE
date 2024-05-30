@@ -38,7 +38,7 @@ export const updateUser = async (req, res) => {
                 id,
                 {
                     fullName: req.body.fullName,
-                    phoneNumbber: req.body.phoneNumbber,
+                    phoneNumber: req.body.phoneNumber,
                     address: req.body.address,
                 },
                 { new: true },
