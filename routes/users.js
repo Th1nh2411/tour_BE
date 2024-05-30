@@ -34,6 +34,6 @@ router.get('/:id', verifyToken, verifyUser, checkExistUser, getDetailUser);
 
 //Get all user
 router.get('/', verifyToken, verifyAdmin, getAllUser);
-router.get('/messenger/chat', verifyToken, verifyUser, getAllStaff);
+router.get('/message/chat', verifyToken, verifyUser, getAllStaff);
 
 export default router;

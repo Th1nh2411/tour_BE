@@ -23,9 +23,9 @@ const port = process.env.PORT || 8000;
 io.on('connection', (socket) => {
     console.log('New user connected');
 
-    socket.on('chat:message', (message) => {
+    socket.on('message', (data) => {
         // Xử lý tin nhắn và gửi lại cho tất cả các client
-        io.emit('chat:message', message);
+        io.emit('message_response', data);
     });
 
     socket.on('disconnect', () => {

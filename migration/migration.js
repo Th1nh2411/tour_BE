@@ -7,7 +7,8 @@ import Review from '../models/Review.js';
 import Tour from '../models/Tour.js';
 import Wishlist from '../models/Wishlist.js';
 import Feedback from '../models/Feedback.js';
-import Messenger from '../models/Messenger.js';
+import Message from '../models/Message.js';
+import Chat from '../models/Chat.js';
 import mongoose from 'mongoose';
 
 async function seed() {
@@ -909,12 +910,19 @@ async function seed() {
             .catch((err) => {
                 console.error('Error creating Payment collection:', err);
             });
-        await Messenger.createCollection()
+        await Message.createCollection()
             .then(() => {
-                console.log('Messenger collection created');
+                console.log('Message collection created');
             })
             .catch((err) => {
-                console.error('Error creating Messenger collection:', err);
+                console.error('Error creating Message collection:', err);
+            });
+        await Chat.createCollection()
+            .then(() => {
+                console.log('Chat collection created');
+            })
+            .catch((err) => {
+                console.error('Error creating Chat collection:', err);
             });
         await Wishlist.createCollection()
             .then(() => {

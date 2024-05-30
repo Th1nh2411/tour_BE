@@ -10,7 +10,7 @@ import guideRouter from './guide.js';
 import wishlistRouter from './wishlist.js';
 import vnpayRouter from './vnpay.js';
 import feedbackRouter from './feedback.js';
-import messengerRouter from './messenger.js';
+import messageRouter from './message.js';
 const rootRouter = express.Router();
 
 rootRouter.use('/auth', authRouter);
@@ -24,6 +24,6 @@ rootRouter.use('/guide', guideRouter);
 rootRouter.use('/wishlist', wishlistRouter);
 rootRouter.use('/vnpay', vnpayRouter);
 rootRouter.use('/feedback', feedbackRouter);
-rootRouter.use('/messenger', messengerRouter);
+rootRouter.use('/message', messageRouter);
 
 export default rootRouter;
