@@ -27,7 +27,12 @@ io.on('connection', (socket) => {
         // Xử lý tin nhắn và gửi lại cho tất cả các client
         io.emit('message_response', data);
     });
-
+    socket.on('typing', (data) => {
+        io.emit('display_typing', data);
+    });
+    socket.on('stop_typing', (data) => {
+        io.emit('remove_typing', data);
+    });
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
