@@ -3,8 +3,6 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
-import { LocalStorage } from 'node-localstorage';
-const localStorage = new LocalStorage('./scratch');
 
 //Create new User
 export const createUser = async (req, res) => {
@@ -49,7 +47,6 @@ export const updateUser = async (req, res) => {
                     activeID: randomID,
                 },
             ];
-            localStorage.setItem('userUpdate', JSON.stringify(user));
             let transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
@@ -82,7 +79,6 @@ export const updateUser = async (req, res) => {
 
 export const active = async (req, res) => {
     const { activeID, email } = req.body;
-    const storedUser = JSON.parse(localStorage.getItem('user'));
     try {
         if (storedUser) {
             if (storedUser[0].email != email || storedUser[0].email != activeID) {
@@ -97,7 +93,6 @@ export const active = async (req, res) => {
                     activeID: storedUser[0].activeID,
                 });
                 await newUser.save();
-                localStorage.removeItem('user');
                 res.status(200).json({
                     success: true,
                     message: `Đăng ký tài khoản thành công`,
@@ -109,7 +104,6 @@ export const active = async (req, res) => {
                 });
             }
         } else {
-            const storeUserUpdate = JSON.parse(localStorage.getItem('userUpdate'));
             const id = req.body.id_user;
             if (storeUserUpdate) {
                 if (storeUserUpdate[0].email != email || storeUserUpdate[0].email != activeID) {
@@ -120,7 +114,6 @@ export const active = async (req, res) => {
                         },
                         { new: true },
                     );
-                    localStorage.removeItem('userUpdate');
                     res.status(200).json({
                         success: true,
                         message: `Xác minh tài khoản email thành công! Đóng tab cũ để sử dụng thông tin đã được cập nhật.`,
