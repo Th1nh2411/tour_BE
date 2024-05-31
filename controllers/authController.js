@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
-import { LocalStorage } from 'node-localstorage';
-const localStorage = new LocalStorage('./scratch');
 
 export const register = async (req, res) => {
     try {
@@ -24,7 +22,6 @@ export const register = async (req, res) => {
                 activeID: randomID,
             },
         ];
-        localStorage.setItem('user', JSON.stringify(user));
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
