@@ -11,12 +11,10 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const corsOptions = {
-    origin: '*',
-    credentials: true,
-};
 const io = new Server(server, {
-    cors: corsOptions,
+    cors: {
+        origin: '*'
+    },
 });
 const port = process.env.PORT || 8000;
 
@@ -39,9 +37,13 @@ io.on('connection', (socket) => {
 });
 
 //database connection
-
 await db.connect();
+
 //middle ware
+const corsOptions = {
+    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
+    credentials: true,
+};
 app.use(express.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
