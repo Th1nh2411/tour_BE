@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 const server = createServer(app);
 const corsOptions = {
-    origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
+    origin: '*',
     credentials: true,
 };
 const io = new Server(server, {
