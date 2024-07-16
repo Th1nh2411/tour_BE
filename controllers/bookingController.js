@@ -189,11 +189,7 @@ export const checkBooking = async (req, res) => {
             userInfo: req.user.id,
             $or: [{ status: 1 }, { status: 0 }],
         });
-        if (check) {
-            res.status(200).json({ success: true, data: check });
-        } else {
-            res.status(400).json({ success: false, data: null });
-        }
+        res.status(200).json({ success: true, data: check });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
