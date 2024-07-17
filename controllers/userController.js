@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
+import client from '../config/redisConfig.js';
 
 //Create new User
 export const createUser = async (req, res) => {
@@ -41,12 +42,18 @@ export const updateUser = async (req, res) => {
                 },
                 { new: true },
             );
-            const user = [
-                {
-                    email: userUpdated.email,
-                    activeID: randomID,
-                },
-            ];
+            const user = {
+                id: id,
+                email: req.body.email,
+                activeID: randomID,
+            };
+
+            // Lưu thông tin cập nhật vào Redis với TTL là 24 giờ sử dụng activeID làm key
+            await client.set(randomID.toString(), JSON.stringify(user), 'EX', 60 * 30, (err) => {
+                if (err) {
+                    return res.status(500).json({ success: false, message: 'Error saving registration info.' });
+                }
+            });
             let transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
@@ -63,13 +70,13 @@ export const updateUser = async (req, res) => {
                 text: 'HOLIDATE SECURITY', // plain text body
                 html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='${clientConfig.url}?id_user=${id}&email=${req.body.email}&activeID=${randomID}'>Click here</a>
+                    <a href='${clientConfig.url}?activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
             });
             res.status(200).json({
                 success: true,
                 message:
-                    'Cập nhật thông tin thành công. Vui lòng kiểm tra hòm thư để xác thực  và cập nhật tài khoản email!',
+                    'Cập nhật thông tin thành công. Vui lòng kiểm tra hòm thư để xác thực. Mã xác thực có hiệu lực trong 30 phút!',
             });
         }
     } catch (error) {
@@ -78,59 +85,35 @@ export const updateUser = async (req, res) => {
 };
 
 export const active = async (req, res) => {
-    const { activeID, email } = req.body;
+    const { activeID } = req.body;
     try {
-        if (storedUser) {
-            if (storedUser[0].email != email || storedUser[0].email != activeID) {
-                const newUser = new User({
-                    username: storedUser[0].username,
-                    email: storedUser[0].email,
-                    password: storedUser[0].password,
-                    photo: storedUser[0].photo,
-                    address: storedUser[0].address,
-                    fullName: storedUser[0].fullName,
-                    phoneNumber: storedUser[0].phoneNumber,
-                    activeID: storedUser[0].activeID,
-                });
-                await newUser.save();
-                res.status(200).json({
-                    success: true,
-                    message: `Đăng ký tài khoản thành công`,
-                });
-            } else {
-                res.status(400).json({
-                    success: false,
-                    message: `Lỗi đăng ký tài khoản`,
-                });
-            }
-        } else {
-            const id = req.body.id_user;
-            if (storeUserUpdate) {
-                if (storeUserUpdate[0].email != email || storeUserUpdate[0].email != activeID) {
-                    await User.findByIdAndUpdate(
-                        id,
-                        {
-                            email: req.body.email,
-                        },
-                        { new: true },
-                    );
-                    res.status(200).json({
-                        success: true,
-                        message: `Xác minh tài khoản email thành công! Đóng tab cũ để sử dụng thông tin đã được cập nhật.`,
-                    });
-                } else {
-                    res.status(400).json({
-                        success: false,
-                        message: `Lỗi xác minh tài khoản`,
-                    });
-                }
-            } else {
-                res.status(400).json({
-                    success: false,
-                    message: `Lỗi xác minh tài khoản`,
-                });
-            }
+        const userInfo = await client.get(activeID)
+        if (!userInfo) {
+            throw Error('Invalid or expired confirmation code.')
         }
+
+        const user = JSON.parse(userInfo);
+        if(user.id){
+            await User.findByIdAndUpdate(user.id, { email: user.email }, { new: true });
+            client.del(activeID);
+            res.status(200).json({ success: true, message: 'Xác thực email thành công! Tài khoản email của bạn đã được cập nhật.', newEmail: user.email });
+        } else{
+            const newUser = new User({
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                photo: user.photo,
+                address: user.address,
+                fullName: user.fullName,
+                phoneNumber: user.phoneNumber,
+            });
+
+            await newUser.save();
+            client.del(activeID);
+            res.status(200).json({ success: true, message: 'Xác thực email và tạo tài khoản thành công!', newEmail: user.email });
+        }
+        
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

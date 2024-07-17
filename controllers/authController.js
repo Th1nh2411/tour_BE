@@ -4,24 +4,28 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
+import client from '../config/redisConfig.js';
 
 export const register = async (req, res) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
         const randomID = Math.floor(100000 + Math.random() * 900000);
-        const user = [
-            {
-                username: req.body.username,
-                email: req.body.email,
-                password: hash,
-                photo: req.body.photo,
-                address: req.body.address,
-                fullName: req.body.fullName,
-                phoneNumber: req.body.phoneNumber,
-                activeID: randomID,
-            },
-        ];
+        const user = {
+            username: req.body.username,
+            email: req.body.email,
+            password: hash,
+            photo: req.body.photo,
+            address: req.body.address,
+            fullName: req.body.fullName,
+            phoneNumber: req.body.phoneNumber,
+            activeID: randomID,
+        };
+        await client.set(randomID.toString(), JSON.stringify(user), 'EX', 60 * 30, (err) => {
+            if (err) {
+                return res.status(500).json({ success: false, message: 'Error saving registration info.' });
+            }
+        });
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,
@@ -38,12 +42,12 @@ export const register = async (req, res) => {
             text: 'HOLIDATE SECURITY', // plain text body
             html: mailConfig.html(`
                 <h2>Activation URL<br>
-                    <a href='${clientConfig.url}/login?email=${req.body.email}&activeID=${randomID}'>Click here</a>
+                    <a href='${clientConfig.url}/login?activeID=${randomID}'>Click here</a>
                 </h2>`), // htm, // html body
         });
         res.status(200).json({
             success: true,
-            message: 'Đã ghi nhận thông tin. Vui lòng kiểm tra email để xác minh và đăng ký tài khoản!',
+            message: 'Đã ghi nhận thông tin. Vui lòng kiểm tra email để xác thực. Mã xác thực có hiệu lực trong 30 phút!',
         });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
