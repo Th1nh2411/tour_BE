@@ -21,6 +21,13 @@ async function seed() {
                 useUnifiedTopology: true,
             },
         );
+        await UserTemp.createCollection()
+            .then(() => {
+                console.log('UserTemp collection created');
+            })
+            .catch((err) => {
+                console.error('Error creating UserTemp collection:', err);
+            });
         await User.createCollection()
             .then(() => {
                 console.log('User collection created');

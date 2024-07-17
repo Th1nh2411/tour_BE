@@ -4,6 +4,7 @@ import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
 import client from '../config/redisConfig.js';
+import UserTemp from '../models/UserTemp.js';
 
 //Create new User
 export const createUser = async (req, res) => {
@@ -42,18 +43,15 @@ export const updateUser = async (req, res) => {
                 },
                 { new: true },
             );
-            const user = {
-                id: id,
+            const tempUser = new UserTemp({
+                userId: id,
                 email: req.body.email,
                 activeID: randomID,
-            };
-
-            // Lưu thông tin cập nhật vào Redis với TTL là 24 giờ sử dụng activeID làm key
-            await client.set(randomID.toString(), JSON.stringify(user), 'EX', 60 * 30, (err) => {
-                if (err) {
-                    return res.status(500).json({ success: false, message: 'Error saving registration info.' });
-                }
+                type: 'update', // Loại yêu cầu là cập nhật email
             });
+
+            await tempUser.save();
+
             let transporter = nodemailer.createTransport({
                 host: 'smtp.gmail.com',
                 port: 587,
@@ -87,33 +85,36 @@ export const updateUser = async (req, res) => {
 export const active = async (req, res) => {
     const { activeID } = req.body;
     try {
-        const userInfo = await client.get(activeID)
-        if (!userInfo) {
-            throw Error('Invalid or expired confirmation code.')
+        const tempUser = await UserTemp.findOne({ activeID: activeID });
+
+        if (!tempUser) {
+            res.status(404).json({ success: false, message: 'Invalid or expired confirmation code.' });
         }
 
-        const user = JSON.parse(userInfo);
-        if(user.id){
-            await User.findByIdAndUpdate(user.id, { email: user.email }, { new: true });
-            client.del(activeID);
-            res.status(200).json({ success: true, message: 'Xác thực email thành công! Tài khoản email của bạn đã được cập nhật.', newEmail: user.email });
-        } else{
+        if (!tempUser.userId) {
+            // Xử lý đăng ký mới
             const newUser = new User({
-                username: user.username,
-                email: user.email,
-                password: user.password,
-                photo: user.photo,
-                address: user.address,
-                fullName: user.fullName,
-                phoneNumber: user.phoneNumber,
+                username: tempUser.username,
+                email: tempUser.email,
+                password: tempUser.password,
+                photo: tempUser.photo,
+                address: tempUser.address,
+                fullName: tempUser.fullName,
+                phoneNumber: tempUser.phoneNumber,
             });
 
             await newUser.save();
-            client.del(activeID);
-            res.status(200).json({ success: true, message: 'Xác thực email và tạo tài khoản thành công!', newEmail: user.email });
-        }
-        
 
+            await UserTemp.deleteOne({ activeID: activeID });
+
+            res.status(200).json({ success: true, message: 'Xác thực email và tạo tài khoản thành công!', newEmail: tempUser.email });
+        } else {
+            // Xử lý cập nhật email
+            await User.findByIdAndUpdate(tempUser.userId, { email: tempUser.email }, { new: true });
+            
+            await UserTemp.deleteOne({ activeID: activeID });
+            res.status(200).json({ success: true, message: 'Xác thực email thành công! Tài khoản email của bạn đã được cập nhật.', newEmail: tempUser.email });
+        }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

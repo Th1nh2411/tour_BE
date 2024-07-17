@@ -5,13 +5,14 @@ import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
 import client from '../config/redisConfig.js';
+import UserTemp from '../models/UserTemp.js';
 
 export const register = async (req, res) => {
     try {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
         const randomID = Math.floor(100000 + Math.random() * 900000);
-        const user = {
+        const userTemp = new UserTemp({
             username: req.body.username,
             email: req.body.email,
             password: hash,
@@ -20,12 +21,10 @@ export const register = async (req, res) => {
             fullName: req.body.fullName,
             phoneNumber: req.body.phoneNumber,
             activeID: randomID,
-        };
-        await client.set(randomID.toString(), JSON.stringify(user), 'EX', 60 * 30, (err) => {
-            if (err) {
-                return res.status(500).json({ success: false, message: 'Error saving registration info.' });
-            }
+            type: 'register', // Loại yêu cầu là đăng ký mới
         });
+
+        await userTemp.save();
         let transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 587,

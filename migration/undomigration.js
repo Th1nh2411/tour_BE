@@ -34,6 +34,7 @@ async function deleteCollections() {
             deleteCollection('messages'),
             deleteCollection('chats'),
             deleteCollection('feedbacks'),
+            deleteCollection('usertemps'),
         ]);
         console.log('All collections deleted successfully.');
     } catch (error) {
