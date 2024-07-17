@@ -37,8 +37,6 @@ io.on('connection', (socket) => {
 
 //database connection
 await db.connect();
-// redis connection
-await client.connect();
 //middle ware
 const corsOptions = {
     origin: process.env.ENV === 'dev' ? true : 'https://holidate.vercel.app',
