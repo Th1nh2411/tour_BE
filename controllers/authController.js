@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
-import client from '../config/redisConfig.js';
 import UserTemp from '../models/UserTemp.js';
 
 export const register = async (req, res) => {

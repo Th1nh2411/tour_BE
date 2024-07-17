@@ -5,7 +5,6 @@ import cookieParser from 'cookie-parser';
 import rootRouter from './routes/index.js';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
-import client from './config/redisConfig.js';
 import db from './utils/db.js';
 dotenv.config();
 

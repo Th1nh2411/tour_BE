@@ -3,7 +3,6 @@ import bcrypt from 'bcryptjs';
 import nodemailer from 'nodemailer';
 import * as mailConfig from '../config/mailConfig.js';
 import * as clientConfig from '../config/clientConfig.js';
-import client from '../config/redisConfig.js';
 import UserTemp from '../models/UserTemp.js';
 
 //Create new User
