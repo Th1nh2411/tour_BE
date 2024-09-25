@@ -17,9 +17,7 @@ export const getMessageByUser = async (req, res) => {
     const sender = req.user.id;
     const user_id = req.query.user_id;
     try {
-        const chat = await Chat.findOne({
-            participants: { $all: [sender, user_id], $size: 2 },
-        });
+        const chat = await findChatByParticipants([sender, user_id]);
 
         if (!chat) {
             res.status(200).json({ success: true, data: [], chat });
@@ -37,9 +35,7 @@ export const getSupportMessage = async (req, res) => {
     const sender = req.user.id;
     try {
         const admin = await User.findOne({ username: 'admin' });
-        const chat = await Chat.findOne({
-            participants: { $all: [sender, admin._id], $size: 2 },
-        });
+        const chat = await findChatByParticipants([sender, admin._id]);
 
         if (!chat) {
             res.status(200).json({ success: true, data: [] });
